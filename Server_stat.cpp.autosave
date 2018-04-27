@@ -1,0 +1,6 @@
+#include "Server_stat.h"
+
+Server_stat::Server_stat()
+{
+
+}
