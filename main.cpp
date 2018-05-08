@@ -41,6 +41,7 @@
 #include <QPushButton>
 
 #include "dialog.h"
+#include "Server_stat.h"
 
 #include <iostream>
 using namespace std;
@@ -54,8 +55,15 @@ int main(int argc, char *argv[])
     Dialog dialog;
 
 
+    QWidget fenetre;
 
-    //bouton.show();
+
+    Server_stat *SStat = new Server_stat();
+
+
+    SStat->show();
+    fenetre.show();
+
     // ON L'AFFICHE...
     dialog.show();
     return app.exec();

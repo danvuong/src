@@ -1,27 +1,42 @@
 #ifndef SERVER_STAT_H
 #define SERVER_STAT_H
 
+
+
+#include <string>
+
+using namespace std;
+
+
+struct StatCount {
+    string name;
+    int number;
+};
+
+
 class Server_stat
 {
 public:
-    Server_stat(){
-        count_request_recu = 0;
-        count_request_done = 0;
-        count_error = 0;
-        count_client = 0;
-        count_octets = 0;
-        request_received = 0;
-        //fich_down = 0;
-    }
+    Server_stat();
+    void fileSend(string _name, int _number);
+    void add_A_Request(string _type);
+    void add_A_Done_request();
+    void addError();
+    void addClient();
+    void addBytes(int _nb);
+    void show();
+
+
 
 private:
-    int count_request_recu; //nom tendancieux
-    int count_request_done; //nb requetes traitees
-    int count_error;    //nb erreur de chaque type
+    int count_request_received; //nom tendancieux
+    int count_request_traited; //nb requetes traitees
+    int count_error_occured;    //nb erreur de chaque type
     int count_client;   //nb clients tot
-    int count_octets;   //transmis/recus
-    int request_received; //quel tyoe de donnee pr une requete ?
-    int fich_down[256]; //noms+nb de tel des fichiers
+    int count_bytes;   //transmis/recus
+    StatCount request_received[256]; //quel tyoe de donnee pr une requete ?
+    StatCount fich_down[256]; //noms+nb de tel des fichiers
+
 
 
 };
