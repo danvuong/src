@@ -53,12 +53,10 @@ int main(int argc, char *argv[])
 
     // ON CREE UNE BOITE DE DIALOGUE
     Dialog dialog;
-    Server_stat  affstat;
 
 
     //bouton.show();
     // ON L'AFFICHE...
     dialog.show();
-    affstat.show();
     return app.exec();
 }
