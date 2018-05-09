@@ -43,18 +43,19 @@
 //! [0]
 MySocketServer::MySocketServer(QObject *parent)
     : QTcpServer(parent)
-{
-
+{ 
 }
 
 void MySocketServer::incomingConnection(int socketDescriptor)
 {
     cout << "(II) Launching the Network monitor process" << endl;
 
-    emit serverMessage();
+    //emit serverMessage();
 
     // CREATION DE L'OBJET EN CHARGE DES REPONSES RESEAU
     MySocketClient *thread = new MySocketClient(socketDescriptor, this);
+
+    connect(thread ,SIGNAL(requestHTML()), &statServer, SLOT(test()));
 
     // ON INDIQUE QUE LORSQU'UN CLIENT SE CONNECTE ON DELEGE LA REPONSE
     // AU PROCESSUS DEFINI CI DESSUS...

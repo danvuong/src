@@ -39,6 +39,8 @@
 #define FORTUNETHREAD_H
 
 #include <iostream>
+#include "server_stat.h"
+
 using namespace std;
 
 #include <QThread>
@@ -60,6 +62,8 @@ public:
 
 signals:
     void error(QTcpSocket::SocketError socketError);
+    void requestHTML();
+
 
 private:
     int socketDescriptor;

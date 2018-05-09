@@ -38,6 +38,11 @@
 #include <QtWidgets>
 #include <QtNetwork>
 #include <QString>
+#include <QTextEdit>   // Nous allons tout de même afficher le contenu du fichier ^^
+#include <QFile>       // Pour utiliser le fichier
+#include <QString>     // Stocke le contenu du fichier
+#include <QTextStream> // Flux sortant du fichier
+
 
 #include <stdlib.h>
 #include <iostream>
@@ -52,6 +57,7 @@ Server_stat::Server_stat(QWidget *parent)
     quitButton->setAutoDefault(false);
 
     count = 0;
+    count_request_recu=0;
     QString message = QString::number(count);
     statusLabel->setText(tr("nb connections detectees : ") + message);
 
@@ -77,4 +83,41 @@ void Server_stat::messageFromServer(){
 
     std::cout << "######## MESSAGE FROM SERVER" << std::endl;
     statusLabel->setText(tr("nb connections detectees : ") + message);
+}
+
+void Server_stat::test()
+{
+    count_request_recu++;
+    QString str_count_request_recu = QString::number(count_request_recu);
+    std::cout << "######## NOMBRE REQUETE RECU: " << count_request_recu << std::endl;
+
+    QString chemin;
+    chemin = "public_html/statistiques.html";
+    QFile fichier(chemin);
+    if(fichier.open(QIODevice::WriteOnly))
+    {
+        std::cout << "####### FICHIER OUVERT" << std::endl;
+        QTextStream flux(&fichier);
+        //flux << "HTTP/1.1 200\n";
+        flux << "<!DOCTYPE html>\n";
+        flux << "\n";
+        flux << "<html>\n";
+        flux << "<head>\n";
+        flux << "   <title>Statistiques</title>\n";
+        flux << "</head>\n";
+
+        //####### CORPS DU TEXTE ########
+        flux << "<body>\n";
+        flux << "   <p> STATISTIQUES: </p>\n";
+        flux << "<p> Nombre de requetes reçues: " + str_count_request_recu + "</p>";
+        flux << "</body>\n";
+        //##############################
+
+        flux << "</html>\n";
+        fichier.close();
+    }
+    else
+        std::cerr << "ERREUR FICHIER" << std::endl;
+
+
 }

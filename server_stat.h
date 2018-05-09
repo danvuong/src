@@ -69,6 +69,7 @@ private:
 
 public slots:
     void messageFromServer();
+    void test();
 
 };
 

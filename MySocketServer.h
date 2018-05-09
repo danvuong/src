@@ -41,6 +41,7 @@
 #include <QStringList>
 #include <QTcpServer>
 #include "MyFileCache.h"
+#include "server_stat.h"
 
 class MySocketServer : public QTcpServer
 {
@@ -51,6 +52,10 @@ public:
 
 protected:
     void incomingConnection(int socketDescriptor);
+
+private:
+    Server_stat statServer;
+
 
 signals:
     void serverMessage();

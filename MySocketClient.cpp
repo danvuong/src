@@ -89,6 +89,8 @@ void MySocketClient::run()
 
     // ON AFFICHE LA COMMANDE A L'ECRAN...
     cout << "COMMANDE : =>" << ligne << "<=" << endl;
+    emit requestHTML();
+
 
    int pos1 = ligne.find(" ");
    string cmde = ligne.substr(0, pos1);
@@ -149,7 +151,6 @@ void MySocketClient::run()
                 return;
         }
         tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
-
         tcpSocket.write( file->readAll() );
 
         file->close();
