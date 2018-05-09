@@ -52,6 +52,8 @@ public:
 protected:
     void incomingConnection(int socketDescriptor);
 
+signals:
+    void serverMessage();
 };
 
 #endif

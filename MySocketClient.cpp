@@ -36,6 +36,8 @@
 ****************************************************************************/
 
 #include "MySocketClient.h"
+//#include "testducul.h"
+//#include "testducul.cpp"
 
 #include <QtNetwork>
 

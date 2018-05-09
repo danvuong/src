@@ -41,7 +41,8 @@
 #include <QPushButton>
 
 #include "dialog.h"
-#include "Server_stat.h"
+//#include "Server_stat.h"
+#include "testducul.h"
 
 #include <iostream>
 using namespace std;
@@ -53,12 +54,23 @@ int main(int argc, char *argv[])
 
     // ON CREE UNE BOITE DE DIALOGUE
     Dialog dialog;
-    Server_stat  affstat;
+<<<<<<< HEAD
+    //Server_stat  affstat;
+    testducul test;
+
+    test._addrequete();
+    cout << "nombre requete" << test.count_request_recu << endl;
+=======
+>>>>>>> 984ad3651cf3caa7f019016acb87fceb04b47eea
 
 
     //bouton.show();
     // ON L'AFFICHE...
     dialog.show();
-    affstat.show();
+<<<<<<< HEAD
+    test.show();
+    //affstat.show();
+=======
+>>>>>>> 984ad3651cf3caa7f019016acb87fceb04b47eea
     return app.exec();
 }

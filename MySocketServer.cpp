@@ -51,6 +51,8 @@ void MySocketServer::incomingConnection(int socketDescriptor)
 {
     cout << "(II) Launching the Network monitor process" << endl;
 
+    emit serverMessage();
+
     // CREATION DE L'OBJET EN CHARGE DES REPONSES RESEAU
     MySocketClient *thread = new MySocketClient(socketDescriptor, this);
 
@@ -64,3 +66,5 @@ void MySocketServer::incomingConnection(int socketDescriptor)
     // PUIS ON REND LA MAIN EN ATTENTE D'UN CLIENT
     cout << "(II) Network monitor process launch : OK" << endl;
 }
+
+

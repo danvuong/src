@@ -40,6 +40,7 @@
 
 #include <QtWidgets/QDialog>
 #include "MySocketServer.h"
+#include "server_stat.h"
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -61,6 +62,7 @@ private:
     // CREATION ET LANCEMENT DU SERVEUR RESEAU
     //
     MySocketServer server;
+    Server_stat statServer;
 };
 
 #endif

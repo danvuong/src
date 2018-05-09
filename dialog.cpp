@@ -61,7 +61,9 @@ Dialog::Dialog(QWidget *parent)
                             "Use internet navigator now.")
                          .arg(server.serverPort()));
 
+    // CONNECTIONS
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(&server, SIGNAL(serverMessage()), &statServer, SLOT(messageFromServer()));
 
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     buttonLayout->addStretch(1);
@@ -74,4 +76,6 @@ Dialog::Dialog(QWidget *parent)
     setLayout(mainLayout);
 
     setWindowTitle(tr("Small Web Server"));
+
+    statServer.show();
 }

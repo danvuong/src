@@ -37,8 +37,10 @@
 
 #include <QtWidgets>
 #include <QtNetwork>
+#include <QString>
 
 #include <stdlib.h>
+#include <iostream>
 
 #include "Server_stat.h"
 
@@ -49,10 +51,10 @@ Server_stat::Server_stat(QWidget *parent)
     quitButton = new QPushButton(tr("Quit"));
     quitButton->setAutoDefault(false);
 
+    count = 0;
+    QString message = QString::number(count);
+    statusLabel->setText(tr("nb connections detectees : ") + message);
 
-
-    statusLabel->setText(tr("the server's stats will be print here"
-                            "come later"));
 
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
 
@@ -67,4 +69,12 @@ Server_stat::Server_stat(QWidget *parent)
     setLayout(mainLayout);
 
     setWindowTitle(tr("Stat Server"));
+}
+
+void Server_stat::messageFromServer(){
+    count++;
+    QString message = QString::number(count);
+
+    std::cout << "######## MESSAGE FROM SERVER" << std::endl;
+    statusLabel->setText(tr("nb connections detectees : ") + message);
 }
