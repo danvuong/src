@@ -51,6 +51,8 @@ class Server_stat : public QDialog
 
 public:
     Server_stat(QWidget *parent = 0);
+    int count_client;   //nb clients tot
+
 
 
 
@@ -62,7 +64,6 @@ private:
     int count_request_recu; //nom tendancieux
     int count_request_done; //nb requetes traitees
     int count_error;    //nb erreur de chaque type
-    int count_client;   //nb clients tot
     int count_octets;   //transmis/recus
     int request_received; //quel tyoe de donnee pr une requete ?
     int fich_down[256]; //noms+nb de tel des fichiers
@@ -70,6 +71,8 @@ private:
 public slots:
     void messageFromServer();
     void test();
+    void addRequestTraited();
+    void addClient();
 
 };
 

@@ -46,6 +46,7 @@
 MySocketClient::MySocketClient(int socketDescriptor, QObject *parent)
     : QThread(parent), socketDescriptor(socketDescriptor)
 {
+    emit newClient();
 }
 
 inline string removeEndLine(string s){
@@ -152,7 +153,7 @@ void MySocketClient::run()
         }
         tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
         tcpSocket.write( file->readAll() );
-
+        emit RequestTraited();
         file->close();
 
    }else{

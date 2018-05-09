@@ -44,6 +44,7 @@
 MySocketServer::MySocketServer(QObject *parent)
     : QTcpServer(parent)
 { 
+    statServer.count_client=0;
 }
 
 void MySocketServer::incomingConnection(int socketDescriptor)
@@ -56,6 +57,9 @@ void MySocketServer::incomingConnection(int socketDescriptor)
     MySocketClient *thread = new MySocketClient(socketDescriptor, this);
 
     connect(thread ,SIGNAL(requestHTML()), &statServer, SLOT(test()));
+    connect(thread ,SIGNAL(RequestTraited()), &statServer, SLOT(addRequestTraited()));
+    connect(thread ,SIGNAL(newClient()), &statServer, SLOT(addClient()));
+
 
     // ON INDIQUE QUE LORSQU'UN CLIENT SE CONNECTE ON DELEGE LA REPONSE
     // AU PROCESSUS DEFINI CI DESSUS...

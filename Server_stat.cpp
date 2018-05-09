@@ -55,9 +55,9 @@ Server_stat::Server_stat(QWidget *parent)
     statusLabel = new QLabel;
     quitButton = new QPushButton(tr("Quit"));
     quitButton->setAutoDefault(false);
-
     count = 0;
     count_request_recu=0;
+    count_request_done=0;
     QString message = QString::number(count);
     statusLabel->setText(tr("nb connections detectees : ") + message);
 
@@ -91,6 +91,11 @@ void Server_stat::test()
     QString str_count_request_recu = QString::number(count_request_recu);
     std::cout << "######## NOMBRE REQUETE RECU: " << count_request_recu << std::endl;
 
+    QString str_count_request_done = QString::number(count_request_done);
+
+    QString str_count_client = QString::number(count_client);
+
+
     QString chemin;
     chemin = "public_html/statistiques.html";
     QFile fichier(chemin);
@@ -109,7 +114,9 @@ void Server_stat::test()
         //####### CORPS DU TEXTE ########
         flux << "<body>\n";
         flux << "   <p> STATISTIQUES: </p>\n";
-        flux << "<p> Nombre de requetes reçues: " + str_count_request_recu + "</p>";
+        flux << "<p> Nombre de requetes reçues: " + str_count_request_recu + "</p\n";
+        flux << "<p> Nombre de requetes traitées: " + str_count_request_done + "</p>\n";
+        flux << "<p> Nombre de clients: " + str_count_client + "</p>\n";
         flux << "</body>\n";
         //##############################
 
@@ -118,6 +125,14 @@ void Server_stat::test()
     }
     else
         std::cerr << "ERREUR FICHIER" << std::endl;
+}
 
+void Server_stat::addRequestTraited()
+{
+    count_request_done++;
+}
 
+void Server_stat::addClient()
+{
+    count_client++;
 }

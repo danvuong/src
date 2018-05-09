@@ -63,6 +63,8 @@ public:
 signals:
     void error(QTcpSocket::SocketError socketError);
     void requestHTML();
+    void RequestTraited();
+    void newClient();
 
 
 private:
