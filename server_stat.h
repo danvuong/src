@@ -40,6 +40,7 @@
 
 #include <QtWidgets/QDialog>
 #include <QString>
+#include <string>
 
 QT_BEGIN_NAMESPACE
 class QLabel;

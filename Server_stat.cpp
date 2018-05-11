@@ -98,6 +98,9 @@ void Server_stat::test()
 
     QString str_count_client = QString::number(count_client);
 
+    QString str_count_octets_received = QString::number(count_octets_received);
+
+    QString str_count_octets_send = QString::number(count_octets_send);
 
     QString chemin;
     chemin = "public_html/statistiques.html";
@@ -109,6 +112,14 @@ void Server_stat::test()
         //flux << "HTTP/1.1 200\n";
         flux << "<!DOCTYPE html>\n";
         flux << "\n";
+        flux << "<style>\n";
+        flux << "#container{\n";
+        flux << "   width: 800px;\n";
+        flux << "   height: 200px;\n";
+        flux << "   border: 1px solid black;\n";
+        flux << "   overflow: scroll;\n";
+        flux << "}\n";
+        flux << "</style>\n";
         flux << "<html>\n";
         flux << "<head>\n";
         flux << "   <title>Statistiques</title>\n";
@@ -120,6 +131,18 @@ void Server_stat::test()
         flux << "<p> Nombre de requetes reçues: " + str_count_request_received + "</p\n";
         flux << "<p> Nombre de requetes traitées: " + str_count_request_done + "</p>\n";
         flux << "<p> Nombre de clients: " + str_count_client + "</p>\n";
+        flux << "<p> Nombre d'octets envoyés: " + str_count_octets_send + "</p>\n";
+        flux << "<p> Nombre d'octets reçus: " + str_count_octets_received + "</p>\n";
+
+
+            // Fenetre deroulante
+        flux << "<div id=\"container\">\n";
+        for(int i=0;chemin_tab.length;i++)
+        {
+
+        }
+        flux << "</div>\n";
+            //
         flux << "</body>\n";
         //##############################
 
