@@ -137,9 +137,11 @@ void Server_stat::test()
 
             // Fenetre deroulante
         flux << "<div id=\"container\">\n";
-        for(int i=0;chemin_tab.length;i++)
+        int i=0;
+        while ( files_requested[i].chemin.compare("") && i<TAILLE_MAX_TABLEAU)
         {
-
+            flux << "<p>" + QString::fromStdString(files_requested[i].chemin) + "</p>\n";
+            i++;
         }
         flux << "</div>\n";
             //
@@ -149,8 +151,9 @@ void Server_stat::test()
         flux << "</html>\n";
         fichier.close();
     }
-    else
+    else{
         std::cerr << "ERREUR FICHIER" << std::endl;
+    }
 }
 
 
