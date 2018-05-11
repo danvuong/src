@@ -63,7 +63,7 @@ Dialog::Dialog(QWidget *parent)
 
     // CONNECTIONS
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
-    connect(&server, SIGNAL(serverMessage()), &statServer, SLOT(messageFromServer()));
+    //connect(&server, SIGNAL(serverMessage()), &statServer, SLOT(messageFromServer()));
 
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     buttonLayout->addStretch(1);

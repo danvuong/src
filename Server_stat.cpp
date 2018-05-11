@@ -49,17 +49,22 @@
 
 #include "Server_stat.h"
 
+
+int Server_stat::count_client = 0;  //nb clients tot
+int Server_stat::count_request_received = 0; //nom tendancieux
+int Server_stat::count_request_done = 0; //nb requetes traitees
+int Server_stat::count_error = 0;    //nb erreur de chaque type
+int Server_stat::count_octets = 0;   //transmis/recus
+int Server_stat::request_received = 0; //quel tyoe de donnee pr une requete ?
+
 Server_stat::Server_stat(QWidget *parent)
     : QDialog(parent)
 {
     statusLabel = new QLabel;
     quitButton = new QPushButton(tr("Quit"));
     quitButton->setAutoDefault(false);
-    count = 0;
-    count_request_recu=0;
-    count_request_done=0;
-    QString message = QString::number(count);
-    statusLabel->setText(tr("nb connections detectees : ") + message);
+
+    statusLabel->setText(tr("stats du serveur !!"));
 
 
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
@@ -77,19 +82,10 @@ Server_stat::Server_stat(QWidget *parent)
     setWindowTitle(tr("Stat Server"));
 }
 
-void Server_stat::messageFromServer(){
-    count++;
-    QString message = QString::number(count);
-
-    std::cout << "######## MESSAGE FROM SERVER" << std::endl;
-    statusLabel->setText(tr("nb connections detectees : ") + message);
-}
 
 void Server_stat::test()
 {
-    count_request_recu++;
-    QString str_count_request_recu = QString::number(count_request_recu);
-    std::cout << "######## NOMBRE REQUETE RECU: " << count_request_recu << std::endl;
+    QString str_count_request_received = QString::number(count_request_received);
 
     QString str_count_request_done = QString::number(count_request_done);
 
@@ -114,7 +110,7 @@ void Server_stat::test()
         //####### CORPS DU TEXTE ########
         flux << "<body>\n";
         flux << "   <p> STATISTIQUES: </p>\n";
-        flux << "<p> Nombre de requetes reçues: " + str_count_request_recu + "</p\n";
+        flux << "<p> Nombre de requetes reçues: " + str_count_request_received + "</p\n";
         flux << "<p> Nombre de requetes traitées: " + str_count_request_done + "</p>\n";
         flux << "<p> Nombre de clients: " + str_count_client + "</p>\n";
         flux << "</body>\n";
@@ -127,12 +123,49 @@ void Server_stat::test()
         std::cerr << "ERREUR FICHIER" << std::endl;
 }
 
-void Server_stat::addRequestTraited()
-{
-    count_request_done++;
+
+
+void Server_stat::updateStat(typeStat type, int data){
+    std::cout << "######## UPDATE DES STATS :::: " << type << " - " << data << "   ###############" << std::endl;
+    switch ( type ) {
+    case NEWCLIENT :
+        count_client++;
+        std::cout << " NEWCLIENT : nb de clients detectes :  " << count_client << std::endl;
+        break;
+    case NEWREQUEST:
+        count_request_received++;
+        std::cout << " NEWREQUEST : nb de requetes detectes :  " << count_request_received << std::endl;
+        break;
+    case NEWREQUESTDONE:
+        count_request_done++;
+        std::cout << " NEWREQUESTDONE : nb de requetes effectuees :  " << count_request_done << std::endl;
+        break;
+    case NEWERROR:
+        count_error++;
+        std::cout << " NEWERROR : nb d'erreurs detectees :  " << count_error << std::endl;
+        break;
+    case NEWOCTETS:
+        count_octets++;
+        std::cout << " NEWOCTETS : nb d'octets traites :  " << count_octets << std::endl;
+        break;
+    /*case NEWREQUEST:
+        count_request_received++;
+        std::cout << " NEWCLIENT : nb de clients detectes :  " << count_client << std::endl;
+        break;
+    */
+    default :
+        std::cout << " ERROR : unknow updateStat string type \n" << std::endl;
+        break;
+    }
 }
 
-void Server_stat::addClient()
-{
-    count_client++;
+void Server_stat::repaintstat(){
+    std::cout << "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" << std::endl;
+    QString message = QString::number(count_request_received);
+
+    statusLabel->setText(tr("stats du serveur nb requetes : ") + message);
+                            //"Nb requetes recues : ") + message);
+
+    setWindowTitle(tr("Stat Server updated"));
+
 }

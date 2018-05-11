@@ -39,11 +39,24 @@
 #define SERVER_STAT_H
 
 #include <QtWidgets/QDialog>
+#include <QString>
 
 QT_BEGIN_NAMESPACE
 class QLabel;
 class QPushButton;
 QT_END_NAMESPACE
+
+
+typedef enum typestat{
+    NEWCLIENT,
+    NEWREQUEST,
+    NEWREQUEST_TYPE,
+    NEWREQUESTDONE,
+    NEWERROR,
+    NEWOCTETS
+} typeStat;
+
+
 
 class Server_stat : public QDialog
 {
@@ -51,8 +64,7 @@ class Server_stat : public QDialog
 
 public:
     Server_stat(QWidget *parent = 0);
-    int count_client;   //nb clients tot
-
+    static void updateStat(typeStat type, int data);
 
 
 
@@ -60,19 +72,17 @@ private:
     QLabel *statusLabel;
     QPushButton *quitButton;
 
-    int count;
-    int count_request_recu; //nom tendancieux
-    int count_request_done; //nb requetes traitees
-    int count_error;    //nb erreur de chaque type
-    int count_octets;   //transmis/recus
-    int request_received; //quel tyoe de donnee pr une requete ?
+    static int count_client;   //nb clients tot
+    static int count_request_received; //nom tendancieux
+    static int count_request_done; //nb requetes traitees
+    static int count_error;    //nb erreur de chaque type
+    static int count_octets;   //transmis/recus
+    static int request_received; //quel tyoe de donnee pr une requete ?
     int fich_down[256]; //noms+nb de tel des fichiers
 
 public slots:
-    void messageFromServer();
     void test();
-    void addRequestTraited();
-    void addClient();
+    void repaintstat();
 
 };
 

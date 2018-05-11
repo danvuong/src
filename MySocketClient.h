@@ -65,6 +65,7 @@ signals:
     void requestHTML();
     void RequestTraited();
     void newClient();
+    void newstat();
 
 
 private:

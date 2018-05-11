@@ -46,7 +46,6 @@
 MySocketClient::MySocketClient(int socketDescriptor, QObject *parent)
     : QThread(parent), socketDescriptor(socketDescriptor)
 {
-    emit newClient();
 }
 
 inline string removeEndLine(string s){
@@ -61,6 +60,10 @@ void MySocketClient::run()
 {
     cout << "Starting MySocketClient::run()" << endl;
     QTcpSocket tcpSocket;
+
+
+    Server_stat::updateStat(NEWCLIENT, 1);
+
 
     // ON RECUPERE LE LIEN DE COMMUNICATION AVEC LE CLIENT ET ON QUITTE EN CAS
     // DE PROBLEME...
@@ -90,8 +93,8 @@ void MySocketClient::run()
 
     // ON AFFICHE LA COMMANDE A L'ECRAN...
     cout << "COMMANDE : =>" << ligne << "<=" << endl;
+    Server_stat::updateStat(NEWREQUEST, 1);
     emit requestHTML();
-
 
    int pos1 = ligne.find(" ");
    string cmde = ligne.substr(0, pos1);
@@ -153,7 +156,7 @@ void MySocketClient::run()
         }
         tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
         tcpSocket.write( file->readAll() );
-        emit RequestTraited();
+        Server_stat::updateStat(NEWREQUESTDONE, 1);
         file->close();
 
    }else{
@@ -176,5 +179,6 @@ void MySocketClient::run()
     tcpSocket.disconnectFromHost();
     tcpSocket.waitForDisconnected();
     cout << "Finishing MySocketClient::run()" << endl;
+    emit newstat();
 }
 //! [4]
