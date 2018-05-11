@@ -53,7 +53,8 @@ typedef enum typestat{
     NEWREQUEST_TYPE,
     NEWREQUESTDONE,
     NEWERROR,
-    NEWOCTETS
+    NEWOCTETSRECEIVED,
+    NEWOCTETSSEND
 } typeStat;
 
 
@@ -76,9 +77,12 @@ private:
     static int count_request_received; //nom tendancieux
     static int count_request_done; //nb requetes traitees
     static int count_error;    //nb erreur de chaque type
-    static int count_octets;   //transmis/recus
+    static int count_octets_received;   //transmis/recus
+    static int count_octets_send;   //transmis/recus
     static int request_received; //quel tyoe de donnee pr une requete ?
     int fich_down[256]; //noms+nb de tel des fichiers
+
+
 
 public slots:
     void test();

@@ -44,7 +44,8 @@
 MySocketServer::MySocketServer(QObject *parent)
     : QTcpServer(parent)
 { 
-
+    statServer.repaintstat();
+    statServer.show();
 }
 
 void MySocketServer::incomingConnection(int socketDescriptor)
@@ -56,6 +57,7 @@ void MySocketServer::incomingConnection(int socketDescriptor)
     MySocketClient *thread = new MySocketClient(socketDescriptor, this);
 
     connect(thread ,SIGNAL(requestHTML()), &statServer, SLOT(test()));
+    //connect(thread ,SIGNAL(newstat()), &statServer, SLOT(repaintstat()));
     connect(thread ,SIGNAL(newstat()), &statServer, SLOT(repaintstat()));
 
 

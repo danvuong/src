@@ -76,6 +76,4 @@ Dialog::Dialog(QWidget *parent)
     setLayout(mainLayout);
 
     setWindowTitle(tr("Small Web Server"));
-
-    statServer.show();
 }

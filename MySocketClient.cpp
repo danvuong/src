@@ -87,6 +87,9 @@ void MySocketClient::run()
     // ON RECUPERE LA REQUETE ET SA TAILLE
     int lineLength = tcpSocket.readLine(tampon, 65536);
 
+    // ON ENREGISTRE LE NB D'OCTETS RECUS
+    Server_stat::updateStat(NEWOCTETSRECEIVED, lineLength);
+
     // ON TRANSFORME LA REQUETE SOUS FORME DE STRING
     string ligne( tampon );
     ligne = removeEndLine( ligne );
@@ -107,7 +110,6 @@ void MySocketClient::run()
    string file = ligne.substr(0, pos2);
    ligne = ligne.substr(pos2+1, ligne.length()-pos2);
 
-   //file = "/index.html";
    cout << "3. : " << file  << endl;
    cout << "4. : '" << ligne << "'" << endl;
 
@@ -121,7 +123,6 @@ void MySocketClient::run()
     }
 
    QString str = tr("public_html") + tr(file.c_str());
-   //QString str = "./index.html";
    QFile f( str );
    QDir  d( str );
 
@@ -134,12 +135,16 @@ void MySocketClient::run()
        cout << "### erreur 404 ####" <<endl;
        str = tr("public_html") + tr("/err404.html");
        QFile* file = new QFile( str );
+       int tailleFichier = file->bytesAvailable();
         if (!file->open(QIODevice::ReadWrite))
         {
                 delete file;
                 return;
         }
         tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
+
+        // enregistre le nb de bytes envoyes
+        Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
 
         tcpSocket.write( file->readAll() );
 
@@ -149,6 +154,7 @@ void MySocketClient::run()
 
    }else if( f.exists() == true ){
        QFile* file = new QFile( str );
+       int tailleFichier = file->bytesAvailable();
         if (!file->open(QIODevice::ReadWrite))
         {
                 delete file;
@@ -156,6 +162,9 @@ void MySocketClient::run()
         }
         tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
         tcpSocket.write( file->readAll() );
+            // enregistre le nb de bytes envoyes
+        Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
+            //Comptabilise la nouvelle requete effectuée
         Server_stat::updateStat(NEWREQUESTDONE, 1);
         file->close();
 

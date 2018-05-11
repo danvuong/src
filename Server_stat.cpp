@@ -49,12 +49,13 @@
 
 #include "Server_stat.h"
 
-
+// VARIABLES
 int Server_stat::count_client = 0;  //nb clients tot
 int Server_stat::count_request_received = 0; //nom tendancieux
 int Server_stat::count_request_done = 0; //nb requetes traitees
 int Server_stat::count_error = 0;    //nb erreur de chaque type
-int Server_stat::count_octets = 0;   //transmis/recus
+int Server_stat::count_octets_received = 0;   //nb octets recus
+int Server_stat::count_octets_send = 0;    //nb octets transmis
 int Server_stat::request_received = 0; //quel tyoe de donnee pr une requete ?
 
 Server_stat::Server_stat(QWidget *parent)
@@ -64,7 +65,8 @@ Server_stat::Server_stat(QWidget *parent)
     quitButton = new QPushButton(tr("Quit"));
     quitButton->setAutoDefault(false);
 
-    statusLabel->setText(tr("stats du serveur !!"));
+    QString message = QString::number(count_client);
+    statusLabel->setText(tr("stats du serveur !! tamere ") + message);
 
 
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
@@ -80,9 +82,10 @@ Server_stat::Server_stat(QWidget *parent)
     setLayout(mainLayout);
 
     setWindowTitle(tr("Stat Server"));
+
 }
 
-
+// SLOT
 void Server_stat::test()
 {
     QString str_count_request_received = QString::number(count_request_received);
@@ -124,7 +127,7 @@ void Server_stat::test()
 }
 
 
-
+// STATIC
 void Server_stat::updateStat(typeStat type, int data){
     std::cout << "######## UPDATE DES STATS :::: " << type << " - " << data << "   ###############" << std::endl;
     switch ( type ) {
@@ -144,9 +147,13 @@ void Server_stat::updateStat(typeStat type, int data){
         count_error++;
         std::cout << " NEWERROR : nb d'erreurs detectees :  " << count_error << std::endl;
         break;
-    case NEWOCTETS:
-        count_octets++;
-        std::cout << " NEWOCTETS : nb d'octets traites :  " << count_octets << std::endl;
+    case NEWOCTETSRECEIVED:
+        count_octets_received += data;
+        std::cout << " NEWOCTETS : nb d'octets recus :  " << count_octets_received << std::endl;
+        break;
+    case NEWOCTETSSEND:
+        count_octets_send += data;
+        std::cout << " NEWOCTETS : nb d'octets envoyes :  " << count_octets_send << std::endl;
         break;
     /*case NEWREQUEST:
         count_request_received++;
@@ -159,13 +166,20 @@ void Server_stat::updateStat(typeStat type, int data){
     }
 }
 
+// SLOT
 void Server_stat::repaintstat(){
-    std::cout << "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" << std::endl;
-    QString message = QString::number(count_request_received);
 
-    statusLabel->setText(tr("stats du serveur nb requetes : ") + message);
-                            //"Nb requetes recues : ") + message);
-
-    setWindowTitle(tr("Stat Server updated"));
+    QString message1 = QString::number(count_request_received);
+    QString message2 = QString::number(count_request_done);
+    QString message3 = QString::number(count_client);
+    QString message4 = QString::number(count_error);
+    QString message5 = QString::number(count_octets_received);
+    QString message6 = QString::number(count_octets_send);
+    statusLabel->setText(tr(" nb de requetes recues :  ") + message1 +
+                         tr("\n\n nb de requetes traitees :  ") + message2 +
+                         tr("\n\n nb de clients enregistres :  ") + message3 +
+                         tr("\n\n nb d'erreurs detectees :  ") + message4 +
+                         tr("\n\n b d'octets recus :  ") + message5 +
+                         tr("\n\n b d'octets envoyes :  ") + message6 );
 
 }

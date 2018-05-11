@@ -62,7 +62,6 @@ private:
     // CREATION ET LANCEMENT DU SERVEUR RESEAU
     //
     MySocketServer server;
-    Server_stat statServer;
 };
 
 #endif
