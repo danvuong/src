@@ -46,8 +46,10 @@
 
 #include <stdlib.h>
 #include <iostream>
+#include <string>
 
 #include "Server_stat.h"
+
 
 // VARIABLES
 int Server_stat::count_client = 0;  //nb clients tot
@@ -57,6 +59,8 @@ int Server_stat::count_error = 0;    //nb erreur de chaque type
 int Server_stat::count_octets_received = 0;   //nb octets recus
 int Server_stat::count_octets_send = 0;    //nb octets transmis
 int Server_stat::request_received = 0; //quel tyoe de donnee pr une requete ?
+file_type Server_stat::files_requested[TAILLE_MAX_TABLEAU]; //noms+nb de tel des fichiers
+
 
 Server_stat::Server_stat(QWidget *parent)
     : QDialog(parent)
@@ -166,6 +170,28 @@ void Server_stat::updateStat(typeStat type, int data){
     }
 }
 
+void Server_stat::addTypeOfRequest(std::string chemin){
+    int i = 0;
+    bool already_added = false;
+    while ( files_requested[i].chemin.compare("") && i<TAILLE_MAX_TABLEAU){
+        if( !chemin.compare(files_requested[i].chemin) ){
+            files_requested[i].nombre++;
+            already_added = true;
+        }
+        i++;
+    }
+    if(!already_added && i<TAILLE_MAX_TABLEAU){
+        files_requested[i].chemin = chemin;
+        files_requested[i].nombre = 1;
+    }
+    std::cout << " RrRrR type de requete ajoutee : " << files_requested[i].chemin << "en position : " << i << std::endl;
+}
+
+void Server_stat::afficheTypeOfRequest(){
+    ;
+}
+
+
 // SLOT
 void Server_stat::repaintstat(){
 
@@ -175,11 +201,14 @@ void Server_stat::repaintstat(){
     QString message4 = QString::number(count_error);
     QString message5 = QString::number(count_octets_received);
     QString message6 = QString::number(count_octets_send);
+    std::string message71 = files_requested[0].chemin + " : ";
+    QString message72 = QString::number(files_requested[0].nombre);
     statusLabel->setText(tr(" nb de requetes recues :  ") + message1 +
                          tr("\n\n nb de requetes traitees :  ") + message2 +
                          tr("\n\n nb de clients enregistres :  ") + message3 +
                          tr("\n\n nb d'erreurs detectees :  ") + message4 +
-                         tr("\n\n b d'octets recus :  ") + message5 +
-                         tr("\n\n b d'octets envoyes :  ") + message6 );
+                         tr("\n\n nb d'octets recus :  ") + message5 +
+                         tr("\n\n nb d'octets envoyes :  ") + message6 +
+                         tr("\n\n types de requetes effectuees : ") + tr(message71.c_str()) +  message72);
 
 }

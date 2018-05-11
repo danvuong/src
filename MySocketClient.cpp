@@ -125,6 +125,8 @@ void MySocketClient::run()
    QString str = tr("public_html") + tr(file.c_str());
    QFile f( str );
    QDir  d( str );
+   //enregistre le chemin demandé
+   Server_stat::addTypeOfRequest(str.toStdString());
 
    cout << " - Chemin du fichier : " << str.toStdString() << endl;
    cout << " - isFile :          : " << f.exists() << endl;

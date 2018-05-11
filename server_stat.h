@@ -46,6 +46,9 @@ class QLabel;
 class QPushButton;
 QT_END_NAMESPACE
 
+#define TAILLE_MAX_TABLEAU 512
+
+
 
 typedef enum typestat{
     NEWCLIENT,
@@ -57,7 +60,10 @@ typedef enum typestat{
     NEWOCTETSSEND
 } typeStat;
 
-
+struct file_type{
+    std::string chemin = "";
+    int nombre = 0;
+};
 
 class Server_stat : public QDialog
 {
@@ -66,7 +72,8 @@ class Server_stat : public QDialog
 public:
     Server_stat(QWidget *parent = 0);
     static void updateStat(typeStat type, int data);
-
+    static void addTypeOfRequest(std::string chemin);
+    void afficheTypeOfRequest();
 
 
 private:
@@ -80,7 +87,7 @@ private:
     static int count_octets_received;   //transmis/recus
     static int count_octets_send;   //transmis/recus
     static int request_received; //quel tyoe de donnee pr une requete ?
-    int fich_down[256]; //noms+nb de tel des fichiers
+    static file_type files_requested[TAILLE_MAX_TABLEAU]; //noms+nb de tel des fichiers
 
 
 
