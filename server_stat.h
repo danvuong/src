@@ -89,7 +89,7 @@ private:
     static int count_octets_send;   //transmis/recus
     static int request_received; //quel tyoe de donnee pr une requete ?
     static file_type files_requested[TAILLE_MAX_TABLEAU]; //noms+nb de tel des fichiers
-
+    static file_type all_files_requested[TAILLE_MAX_TABLEAU];
 
 
 public slots:

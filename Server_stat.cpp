@@ -60,7 +60,7 @@ int Server_stat::count_octets_received = 0;   //nb octets recus
 int Server_stat::count_octets_send = 0;    //nb octets transmis
 int Server_stat::request_received = 0; //quel tyoe de donnee pr une requete ?
 file_type Server_stat::files_requested[TAILLE_MAX_TABLEAU]; //noms+nb de tel des fichiers
-
+file_type Server_stat::all_files_requested[TAILLE_MAX_TABLEAU];
 
 Server_stat::Server_stat(QWidget *parent)
     : QDialog(parent)
@@ -139,9 +139,9 @@ void Server_stat::test()
         flux << "<div id=\"container\">\n";
 
         int i=0;
-        while ( files_requested[i].chemin.compare("") && i<TAILLE_MAX_TABLEAU)
+        while ( all_files_requested[i].chemin.compare("") && i<TAILLE_MAX_TABLEAU)
         {
-            flux << "<p>" + QString::fromStdString(files_requested[i].chemin) + "</p>\n";
+            flux << "<p>" + QString::fromStdString(all_files_requested[i].chemin) + "</p>\n";
             i++;
         }
         flux << "</div>\n";
@@ -199,6 +199,7 @@ void Server_stat::updateStat(typeStat type, int data){
 
 void Server_stat::addTypeOfRequest(std::string chemin){
     int i = 0;
+    int k = 0;
     bool already_added = false;
     while ( files_requested[i].chemin.compare("") && i<TAILLE_MAX_TABLEAU){
         if( !chemin.compare(files_requested[i].chemin) ){
@@ -211,6 +212,11 @@ void Server_stat::addTypeOfRequest(std::string chemin){
         files_requested[i].chemin = chemin;
         files_requested[i].nombre = 1;
     }
+    while(all_files_requested[k].chemin.compare("") && k<TAILLE_MAX_TABLEAU){
+        k++;
+    }
+    all_files_requested[k].chemin = chemin;
+
     std::cout << " RrRrR type de requete ajoutee : " << files_requested[i].chemin << "en position : " << i << std::endl;
 }
 
