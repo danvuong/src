@@ -133,7 +133,10 @@ void Server_stat::test()
 
             // Fenetre deroulante
         flux << "<div id=\"container\">\n";
-        flux << "\n";
+        for(int i=0;chemin_tab.length;i++)
+        {
+
+        }
         flux << "</div>\n";
             //
         flux << "</body>\n";

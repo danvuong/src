@@ -40,6 +40,7 @@
 
 #include <QtWidgets/QDialog>
 #include <QString>
+#include <string>
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -80,7 +81,7 @@ private:
     static int count_octets_received;   //transmis/recus
     static int count_octets_send;   //transmis/recus
     static int request_received; //quel tyoe de donnee pr une requete ?
-    int fich_down[256]; //noms+nb de tel des fichiers
+    int fich_down[256]; //noms+nb de tel des fichier
 
 
 
