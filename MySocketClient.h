@@ -59,6 +59,7 @@ public:
     MySocketClient(int socketDescriptor, QObject *parent);
 
     void run();
+    void directory(QString path, QFileInfoList list);
 
 signals:
     void error(QTcpSocket::SocketError socketError);

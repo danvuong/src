@@ -40,6 +40,7 @@
 //#include "testducul.cpp"
 
 #include <QtNetwork>
+#include <QString>
 
 #include <fstream>
 
@@ -152,8 +153,23 @@ void MySocketClient::run()
 
 
    }else if( d.exists() == true ){
-       // C'EST UN REPERTOIRE !
+       std::cout << "############## C'EST UN REPERTOIRE !" << std::endl;
+       d.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+       d.setSorting(QDir::Size | QDir::Reversed);
 
+       QFileInfoList list = d.entryInfoList();
+       for (int i = 0; i < list.size(); ++i) {
+           QFileInfo fileInfo = list.at(i);
+           std::cout << qPrintable(QString("%1").arg(fileInfo.fileName()));
+           std::cout << std::endl;
+        }
+       directory("public_html/directory.html", list);
+
+       tcpSocket.write("HTTP/1.1 200\n"); //pb : echappement necessaire apres <!DOCTYPE html> ???
+       QString str2 = tr("public_html/directory.html");
+       QFile* file2 = new QFile( str2 );
+       tcpSocket.write( file2->readAll() );
+       file2->close();
    }else if( f.exists() == true ){
        QFile* file = new QFile( str );
        int tailleFichier = file->bytesAvailable();
@@ -193,3 +209,30 @@ void MySocketClient::run()
     emit newstat();
 }
 //! [4]
+
+
+void MySocketClient::directory(QString path,  QFileInfoList list){
+    QString chemin = path;
+    QFile fichier(chemin);
+    if(fichier.open(QIODevice::WriteOnly))
+    {
+        QTextStream flux(&fichier);
+        flux << "<!DOCTYPE html>\n";
+        flux << "\n";
+        flux << "<html>\n";
+        flux << "<head>\n";
+        flux << "   <title>Directory</title>\n";
+        flux << "</head>\n";
+
+        flux << "<body>\n";
+        for (int i = 0; i < list.size(); ++i) {
+            QFileInfo fileInfo = list.at(i);
+            flux << "<p>"+ QString("%1").arg(fileInfo.fileName()) +"</p>\n";
+         }
+        flux << "</body>\n";
+
+        flux << "</html>\n";
+
+        fichier.close();
+    }
+}
