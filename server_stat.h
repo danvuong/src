@@ -42,6 +42,7 @@
 #include <QString>
 #include <string>
 
+
 QT_BEGIN_NAMESPACE
 class QLabel;
 class QPushButton;
@@ -64,6 +65,11 @@ typedef enum typestat{
 struct file_type{
     std::string chemin = "";
     int nombre = 0;
+};
+
+struct all_file_type{
+    std::string chemin = "";
+    QString date = "";
 };
 
 class Server_stat : public QDialog
@@ -89,7 +95,7 @@ private:
     static int count_octets_send;   //transmis/recus
     static int request_received; //quel tyoe de donnee pr une requete ?
     static file_type files_requested[TAILLE_MAX_TABLEAU]; //noms+nb de tel des fichiers
-    static file_type all_files_requested[TAILLE_MAX_TABLEAU];
+    static all_file_type all_files_requested[TAILLE_MAX_TABLEAU];
 
 
 public slots:

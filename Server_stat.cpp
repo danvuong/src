@@ -47,6 +47,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string>
+#include <QDateTime>
 
 #include "Server_stat.h"
 
@@ -60,7 +61,7 @@ int Server_stat::count_octets_received = 0;   //nb octets recus
 int Server_stat::count_octets_send = 0;    //nb octets transmis
 int Server_stat::request_received = 0; //quel tyoe de donnee pr une requete ?
 file_type Server_stat::files_requested[TAILLE_MAX_TABLEAU]; //noms+nb de tel des fichiers
-file_type Server_stat::all_files_requested[TAILLE_MAX_TABLEAU];
+all_file_type Server_stat::all_files_requested[TAILLE_MAX_TABLEAU];
 
 Server_stat::Server_stat(QWidget *parent)
     : QDialog(parent)
@@ -141,7 +142,7 @@ void Server_stat::test()
         int i=0;
         while ( all_files_requested[i].chemin.compare("") && i<TAILLE_MAX_TABLEAU)
         {
-            flux << "<p>" + QString::fromStdString(all_files_requested[i].chemin) + "</p>\n";
+            flux << "<p>" + QString::fromStdString(all_files_requested[i].chemin)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ all_files_requested[i].date + "</p>\n";
             i++;
         }
         flux << "</div>\n";
@@ -215,7 +216,9 @@ void Server_stat::addTypeOfRequest(std::string chemin){
     while(all_files_requested[k].chemin.compare("") && k<TAILLE_MAX_TABLEAU){
         k++;
     }
+    QString sDate = QDateTime::currentDateTime().toString("dddd dd MMMM yyyy hh:mm:ss.zzz");
     all_files_requested[k].chemin = chemin;
+    all_files_requested[k].date = sDate;
 
     std::cout << " RrRrR type de requete ajoutee : " << files_requested[i].chemin << "en position : " << i << std::endl;
 }
