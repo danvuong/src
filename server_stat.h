@@ -67,6 +67,7 @@ struct file_type{
     int nombre = 0;
 };
 
+
 struct all_file_type{
     std::string chemin = "";
     QString date = "";
