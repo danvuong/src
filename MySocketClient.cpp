@@ -50,10 +50,6 @@ MySocketClient::MySocketClient(int socketDescriptor, QObject *parent)
 {
 }
 
-void MySocketClient::read(QTcpSocket tcpSocket)
-{
-}
-
 inline string removeEndLine(string s){
         while( s.at(s.length()-1) == '\r' ||
                         s.at(s.length()-1) == '\n' ){
@@ -68,6 +64,7 @@ void MySocketClient::run()
     QTcpSocket tcpSocket;
 
     Server_stat::updateStat(NEWCLIENT, 1);
+
 
 
     // ON RECUPERE LE LIEN DE COMMUNICATION AVEC LE CLIENT ET ON QUITTE EN CAS
@@ -88,18 +85,16 @@ void MySocketClient::run()
 
     // LA PREMIERE REQUETE CORRESPOND AU GET NORMALEMENT
     char tampon[65536];
-    char tampon2[65536];
 
     QByteArray array;
 
     // ON RECUPERE LA REQUETE ET SA TAILLE
     int lineLength = tcpSocket.readLine(tampon, 65536);
 
-    QString temp = tcpSocket.readAll();
 
-    while (tcpSocket.bytesAvailable() && temp.contains("\n.\r\n"))
+    while (tcpSocket.bytesAvailable())
         {
-            temp = tcpSocket.readAll();
+           QString temp = tcpSocket.readAll();
             cout << temp.toStdString() << endl;
         }
 
