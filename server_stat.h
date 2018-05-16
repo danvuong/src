@@ -66,6 +66,10 @@ struct file_type{
     int nombre = 0;
 };
 
+
+
+
+
 class Server_stat : public QDialog
 {
     Q_OBJECT
