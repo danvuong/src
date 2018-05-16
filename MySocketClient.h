@@ -60,7 +60,7 @@ public:
 
     void run();
     void directory(QString path, QFileInfoList list, QString fileName);
-
+    void read(QTcpSocket tcpSocket);
 signals:
     void error(QTcpSocket::SocketError socketError);
     void requestHTML();

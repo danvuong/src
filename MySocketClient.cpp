@@ -42,9 +42,15 @@
 #include <QtNetwork>
 #include <QString>
 #include <fstream>
+#include <QDebug>
+#include <QByteArray>
 
 MySocketClient::MySocketClient(int socketDescriptor, QObject *parent)
     : QThread(parent), socketDescriptor(socketDescriptor)
+{
+}
+
+void MySocketClient::read(QTcpSocket tcpSocket)
 {
 }
 
@@ -60,7 +66,6 @@ void MySocketClient::run()
 {
     cout << "Starting MySocketClient::run()" << endl;
     QTcpSocket tcpSocket;
-
 
     Server_stat::updateStat(NEWCLIENT, 1);
 
@@ -83,9 +88,20 @@ void MySocketClient::run()
 
     // LA PREMIERE REQUETE CORRESPOND AU GET NORMALEMENT
     char tampon[65536];
+    char tampon2[65536];
+
+    QByteArray array;
 
     // ON RECUPERE LA REQUETE ET SA TAILLE
     int lineLength = tcpSocket.readLine(tampon, 65536);
+
+    QString temp = tcpSocket.readAll();
+
+    while (tcpSocket.bytesAvailable() && temp.contains("\n.\r\n"))
+        {
+            temp = tcpSocket.readAll();
+            cout << temp.toStdString() << endl;
+        }
 
     // ON ENREGISTRE LE NB D'OCTETS RECUS
     Server_stat::updateStat(NEWOCTETSRECEIVED, lineLength);
@@ -93,6 +109,8 @@ void MySocketClient::run()
     // ON TRANSFORME LA REQUETE SOUS FORME DE STRING
     string ligne( tampon );
     ligne = removeEndLine( ligne );
+
+
 
     // ON AFFICHE LA COMMANDE A L'ECRAN...
     cout << "COMMANDE : =>" << ligne << "<=" << endl;
@@ -153,7 +171,7 @@ void MySocketClient::run()
 //######################### Si c'est un DOSSIER ###################
    }else if( d.exists() == true ){
        std::cout << "##############  C'EST UN REPERTOIRE !" << std::endl;
-       d.setFilter(QDir::Files|QDir::Dirs | QDir::Hidden | QDir::NoSymLinks);
+       d.setFilter(QDir::Files|QDir::NoDotAndDotDot|QDir::Dirs | QDir::Hidden | QDir::NoSymLinks);
        d.setSorting(QDir::Size | QDir::Reversed);
 
        QFileInfoList list = d.entryInfoList();
@@ -227,12 +245,15 @@ void MySocketClient::directory(QString path,  QFileInfoList list, QString fileNa
         flux << "\n";
         flux << "<html>\n";
         flux << "<head>\n";
-        flux << "   <title>Directory</title>\n";
+        flux << "   <title>"+ fileName +"</title>\n";
         flux << "</head>\n";
 
         flux << "<body>\n";
+        flux << "<p> VOUS ETES DANS LE DOSSIER:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + fileName + "</p>\n";
+        flux << "\n";
         if(QString::compare(fileName, "public_html", Qt::CaseInsensitive) != 0)
         {
+            std::cout << "OKOKOKOKOKOKOKOKO" << std::endl;
             for (int i = 0; i < list.size(); ++i) {
                 QFileInfo fileInfo = list.at(i);
                 flux << "<p><a href=\""+ fileName+"/"+ QString("%1").arg(fileInfo.fileName()) +"\">" + QString("%1").arg(fileInfo.fileName()) +"</a></p>\n";
@@ -240,6 +261,7 @@ void MySocketClient::directory(QString path,  QFileInfoList list, QString fileNa
         }
         else
         {
+            std::cout << "NONONONONONOONONO" << std::endl;
             for (int i = 0; i < list.size(); ++i) {
                 QFileInfo fileInfo = list.at(i);
                 flux << "<p><a href=\""+ QString("%1").arg(fileInfo.fileName()) +"\">" + QString("%1").arg(fileInfo.fileName()) +"</a></p>\n";
