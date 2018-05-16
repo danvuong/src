@@ -227,12 +227,13 @@ void MySocketClient::directory(QString path,  QFileInfoList list, QString fileNa
         flux << "\n";
         flux << "<html>\n";
         flux << "<head>\n";
-        flux << "   <title>Directory</title>\n";
+        flux << "   <title>"+ fileName +"</title>\n";
         flux << "</head>\n";
 
         flux << "<body>\n";
         if(QString::compare(fileName, "public_html", Qt::CaseInsensitive) != 0)
         {
+            std::cout << "OKOKOKOKOKOKOKOKO" << std::endl;
             for (int i = 0; i < list.size(); ++i) {
                 QFileInfo fileInfo = list.at(i);
                 flux << "<p><a href=\""+ fileName+"/"+ QString("%1").arg(fileInfo.fileName()) +"\">" + QString("%1").arg(fileInfo.fileName()) +"</a></p>\n";
@@ -240,6 +241,7 @@ void MySocketClient::directory(QString path,  QFileInfoList list, QString fileNa
         }
         else
         {
+            std::cout << "NONONONONONOONONO" << std::endl;
             for (int i = 0; i < list.size(); ++i) {
                 QFileInfo fileInfo = list.at(i);
                 flux << "<p><a href=\""+ QString("%1").arg(fileInfo.fileName()) +"\">" + QString("%1").arg(fileInfo.fileName()) +"</a></p>\n";
