@@ -90,21 +90,6 @@ void MySocketClient::run()
     // ON RECUPERE LA REQUETE ET SA TAILLE
     int lineLength = tcpSocket.readLine(tampon, 65536);
 
-    QString array[];
-    int i=0;
-    while (tcpSocket.bytesAvailable())
-        {
-           QString temp = tcpSocket.readAll();
-           array[i]=temp;
-           i++;
-        }
-
-    int k=0;
-    while(k<array.length())
-    {
-        cout << array[k].toStdString() << endl;
-        k++;
-    }
 
     // ON ENREGISTRE LE NB D'OCTETS RECUS
     Server_stat::updateStat(NEWOCTETSRECEIVED, lineLength);
@@ -207,17 +192,17 @@ void MySocketClient::run()
                     return;
             }
             tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
-            tcpSocket.write( file->readAll() );
+            QByteArray data = file->readAll();
+            tcpSocket.write( data );
                 // enregistre le nb de bytes envoyes
             Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
                 //Comptabilise la nouvelle requete effectuée
             Server_stat::updateStat(NEWREQUESTDONE, 1);
                 //on stocke le fichier dans le cache
-            MyFileCache::StoreInCache( str, file->readAll() );
+            MyFileCache::StoreInCache( str, data );
             file->close();
        }else{
            int tailleFichier = MyFileCache::LoadFromCache( str ).size();
-           std::cout << "#taille du bytearray" << tailleFichier << " et taille du QHash : " <<  std::endl;
            tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
            tcpSocket.write( MyFileCache::LoadFromCache( str ) );
             // enregistre le nb de bytes envoyes

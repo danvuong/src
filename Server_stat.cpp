@@ -245,6 +245,6 @@ void Server_stat::repaintstat(){
                          tr("\n\n nb d'erreurs detectees :  ") + message4 +
                          tr("\n\n nb d'octets recus :  ") + message5 +
                          tr("\n\n nb d'octets envoyes :  ") + message6 +
-                         tr("\n\n types de requetes effectuees : ") + tr(message71.c_str()) +  message72);
+                         tr("\n\n requetes effectuees : ") + tr(message71.c_str()) +  message72);
 
 }
