@@ -17,8 +17,8 @@ class MyFileCache
 public:
     MyFileCache(QWidget *parent = 0);
     ~MyFileCache();
-    static void UpdateCache(QString name);
-    static void LoadCache(QString name, QFile *file);
+    static void StoreInCache(QString name, QByteArray array);
+    static QByteArray LoadFromCache(QString name);
     static int IsInCache(QString name);
 
 

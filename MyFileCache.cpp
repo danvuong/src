@@ -10,13 +10,22 @@ MyFileCache::MyFileCache(QWidget *parent){
 }
 
 //STATIC
-void MyFileCache::UpdateCache(QString name){
+void MyFileCache::StoreInCache(QString name, QByteArray array){
     if (!cache.contains(name)){
-        QFile *file = new QFile( name );
-        cache.insert(name, file->readAll());
+        cache.insert(name, array);
         std::cout << "###### CACHE UPDATED : " << name.toStdString() << std::endl;
     }
 }
+
+
+
+QByteArray MyFileCache::LoadFromCache(QString name){
+    QByteArray array = cache[name];
+    std::cout << "###### LOADED FROM CACHE : " << name.toStdString() << std::endl;
+    std::cout << "######### on a ca :: " << array.data() << std::endl;
+    return array;
+}
+
 
 int MyFileCache::IsInCache(QString name){
     if (cache.contains(name)){
@@ -24,10 +33,4 @@ int MyFileCache::IsInCache(QString name){
     }else{
         return 0;   //Le fichier n'est pas dans le cache
     }
-}
-
-
-void MyFileCache::LoadCache(QString name, QFile *file){
-    file->write(cache[name]);
-    std::cout << "###### LOADED FROM CACHE : " << name.toStdString() << std::endl;
 }

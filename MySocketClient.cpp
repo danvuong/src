@@ -39,6 +39,7 @@
 //#include "testducul.h"
 //#include "testducul.cpp"
 
+
 #include <QtNetwork>
 #include <QString>
 #include <fstream>
@@ -195,20 +196,34 @@ void MySocketClient::run()
 
  //################ SI c'est un FICHIER ############################
    }else if( f.exists() == true ){
-       QFile* file = new QFile( str );
-       int tailleFichier = file->bytesAvailable();
-        if (!file->open(QIODevice::ReadWrite))
-        {
-                delete file;
-                return;
-        }
-        tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
-        tcpSocket.write( file->readAll() );
+       if(MyFileCache::IsInCache( str ) == 0){//Le fichier n'est pas dans le cache
+           QFile* file = new QFile( str );
+           int tailleFichier = file->bytesAvailable();
+            if (!file->open(QIODevice::ReadWrite))
+            {
+                    delete file;
+                    return;
+            }
+            tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
+            tcpSocket.write( file->readAll() );
+                // enregistre le nb de bytes envoyes
+            Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
+                //Comptabilise la nouvelle requete effectuée
+            Server_stat::updateStat(NEWREQUESTDONE, 1);
+                //on stocke le fichier dans le cache
+            MyFileCache::StoreInCache( str, file->readAll() );
+            file->close();
+       }else{
+           int tailleFichier = MyFileCache::LoadFromCache( str ).size();
+           std::cout << "#taille du bytearray" << tailleFichier << " et taille du QHash : " <<  std::endl;
+           tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
+           tcpSocket.write( MyFileCache::LoadFromCache( str ) );
             // enregistre le nb de bytes envoyes
-        Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
+           Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
             //Comptabilise la nouvelle requete effectuée
-        Server_stat::updateStat(NEWREQUESTDONE, 1);
-        file->close();
+           Server_stat::updateStat(NEWREQUESTDONE, 1);
+       }
+
 
    }else{
 
