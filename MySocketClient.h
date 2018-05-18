@@ -40,6 +40,7 @@
 
 #include <iostream>
 #include "server_stat.h"
+#include "MyFileCache.h"
 
 using namespace std;
 
