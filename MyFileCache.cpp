@@ -12,7 +12,7 @@ MyFileCache::MyFileCache(){
 //STATIC
 void MyFileCache::StoreInCache(QString name, QByteArray array){
     // on verifie que le fichier n'est pas dans le cache et n'est pas une page dynamique :
-    if (!cache.contains(name) && QString::compare(name, "public_html/statistiques.html") != 0 ){
+    if (!cache.contains(name) && QString::compare(name, "public_html/statistiques.html") != 0 && QString::compare(name, "public_html/config.html") != 0 ){
         cache.insert(name, array);
         std::cout << "###### CACHE UPDATED : " << name.toStdString() << std::endl;
     }
