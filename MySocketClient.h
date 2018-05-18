@@ -41,6 +41,7 @@
 #include <iostream>
 #include "server_stat.h"
 #include "MyFileCache.h"
+#include "admin.h"
 
 using namespace std;
 
@@ -73,6 +74,7 @@ signals:
 private:
     int socketDescriptor;
     QString text;
+    admin Admin;
 };
 
 #endif

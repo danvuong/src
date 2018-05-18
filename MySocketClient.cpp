@@ -45,6 +45,7 @@
 #include <fstream>
 #include <QDebug>
 #include <QByteArray>
+#include <QVector>
 
 MySocketClient::MySocketClient(int socketDescriptor, QObject *parent)
     : QThread(parent), socketDescriptor(socketDescriptor)
@@ -89,6 +90,16 @@ void MySocketClient::run()
 
     // ON RECUPERE LA REQUETE ET SA TAILLE
     int lineLength = tcpSocket.readLine(tampon, 65536);
+
+    QVector<QString> array;
+    while (tcpSocket.bytesAvailable())
+        {
+           QString temp = tcpSocket.readLine();
+           array.append(temp);
+        }
+
+    Admin.findId(array);
+
 
 
     // ON ENREGISTRE LE NB D'OCTETS RECUS
