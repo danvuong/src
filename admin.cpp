@@ -15,7 +15,10 @@
 
 admin::admin()
 {
-
+    QVector<std::string> temp;
+    temp.append("Dan");
+    temp.append("admin");
+    listAdmin.append(temp);
 }
 
 void admin::findId(QVector<QString> array)
@@ -41,4 +44,23 @@ void admin::findId(QVector<QString> array)
     posi1 = formLigne.find("=");
     mdp = formLigne.substr(posi1+1,std::string::npos);
     std::cout << "|||||||||||||||||||||" << mdp << std::endl;
+    std::cout << "|||||||||||||||||||||" << testMdp() << std::endl;
+
+}
+
+int admin::testMdp()
+{
+    for(int i=0;i<listAdmin.length();i++)
+    {
+        if(listAdmin[i][0].compare(user)==0)
+        {
+            if(listAdmin[i][1].compare(mdp)==0)
+            {
+                return 1;
+            }
+            else
+                return 0;
+        }
+    }
+    return 0;
 }

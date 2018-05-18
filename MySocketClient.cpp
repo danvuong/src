@@ -202,16 +202,39 @@ void MySocketClient::run()
                     delete file;
                     return;
             }
-            tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
-            QByteArray data = file->readAll();
-            tcpSocket.write( data );
-                // enregistre le nb de bytes envoyes
-            Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
-                //Comptabilise la nouvelle requete effectuée
-            Server_stat::updateStat(NEWREQUESTDONE, 1);
-                //on stocke le fichier dans le cache
-            MyFileCache::StoreInCache( str, data );
-            file->close();
+            cout << "&&&&&&&&&&&&&&&&&&&" << fileName << endl;
+            if(fileName.compare("/config.html") == 0)
+            {
+                cout << "CONFIIIIIIIIIIIIIIIIIIIIIIG"<< endl;
+                if(Admin.testMdp())
+                {
+                    tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
+                    QByteArray data = file->readAll();
+                    tcpSocket.write( data );
+                        // enregistre le nb de bytes envoyes
+                    Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
+                        //Comptabilise la nouvelle requete effectuée
+                    Server_stat::updateStat(NEWREQUESTDONE, 1);
+                        //on stocke le fichier dans le cache
+                    MyFileCache::StoreInCache( str, data );
+                    file->close();
+                }
+                else
+                    cout << "PAS LE BON MDP" << endl;
+            }
+            else
+            {
+                tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
+                QByteArray data = file->readAll();
+                tcpSocket.write( data );
+                    // enregistre le nb de bytes envoyes
+                Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
+                    //Comptabilise la nouvelle requete effectuée
+                Server_stat::updateStat(NEWREQUESTDONE, 1);
+                    //on stocke le fichier dans le cache
+                MyFileCache::StoreInCache( str, data );
+                file->close();
+            }
        }else{
            int tailleFichier = MyFileCache::LoadFromCache( str ).size();
            tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
@@ -220,6 +243,7 @@ void MySocketClient::run()
            Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
             //Comptabilise la nouvelle requete effectuée
            Server_stat::updateStat(NEWREQUESTDONE, 1);
+
        }
 
 
