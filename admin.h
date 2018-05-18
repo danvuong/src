@@ -2,10 +2,21 @@
 #define ADMIN_H
 
 
-class Admin
+#include <string>
+#include <QVector>
+
+
+
+class admin
 {
-public:
-    Admin();
+   private:
+    std::string mdp;
+    std::string user;
+
+   public:
+    admin();
+    void findId(QVector<QString> array);
+
 };
 
 #endif // ADMIN_H
