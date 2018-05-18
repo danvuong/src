@@ -5,13 +5,14 @@ QHash<QString, QByteArray> MyFileCache::cache;
 
 
 
-MyFileCache::MyFileCache(QWidget *parent){
+MyFileCache::MyFileCache(){
 
 }
 
 //STATIC
 void MyFileCache::StoreInCache(QString name, QByteArray array){
-    if (!cache.contains(name)){
+    // on verifie que le fichier n'est pas dans le cache et n'est pas une page dynamique :
+    if (!cache.contains(name) && QString::compare(name, "public_html/statistiques.html") != 0 ){
         cache.insert(name, array);
         std::cout << "###### CACHE UPDATED : " << name.toStdString() << std::endl;
     }
@@ -20,10 +21,15 @@ void MyFileCache::StoreInCache(QString name, QByteArray array){
 
 
 QByteArray MyFileCache::LoadFromCache(QString name){
-    QByteArray array = cache[name];
-    std::cout << "###### LOADED FROM CACHE : " << name.toStdString() << std::endl;
-    std::cout << "######### on a ca :: " << array.data() << std::endl;
-    return array;
+    if(cache.contains(name)){
+        QByteArray array = cache[name];
+        std::cout << "###### LOADED FROM CACHE : " << name.toStdString() << std::endl;
+        return array;
+    }else{
+        std::cout << "###### ERROR LOAD UNKNOWN FROM CACHE !!! " << std::endl;
+        QByteArray array = "erreur cache";
+        return array;
+    }
 }
 
 
