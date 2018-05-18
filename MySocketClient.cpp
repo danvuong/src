@@ -91,7 +91,6 @@ void MySocketClient::run()
     // ON RECUPERE LA REQUETE ET SA TAILLE
     int lineLength = tcpSocket.readLine(tampon, 65536);
 
-<<<<<<< HEAD
     QVector<QString> array;
     while (tcpSocket.bytesAvailable())
         {
@@ -102,8 +101,6 @@ void MySocketClient::run()
     Admin.findId(array);
 
 
-=======
->>>>>>> 5eabbb7accd639d5e6d27f4c36093a3ee91afcfe
 
     // ON ENREGISTRE LE NB D'OCTETS RECUS
     Server_stat::updateStat(NEWOCTETSRECEIVED, lineLength);
