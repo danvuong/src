@@ -86,17 +86,24 @@ void MySocketClient::run()
     // LA PREMIERE REQUETE CORRESPOND AU GET NORMALEMENT
     char tampon[65536];
 
-    QByteArray array;
-
     // ON RECUPERE LA REQUETE ET SA TAILLE
     int lineLength = tcpSocket.readLine(tampon, 65536);
 
-
+    QString array[];
+    int i=0;
     while (tcpSocket.bytesAvailable())
         {
            QString temp = tcpSocket.readAll();
-            cout << temp.toStdString() << endl;
+           array[i]=temp;
+           i++;
         }
+
+    int k=0;
+    while(k<array.length())
+    {
+        cout << array[k].toStdString() << endl;
+        k++;
+    }
 
     // ON ENREGISTRE LE NB D'OCTETS RECUS
     Server_stat::updateStat(NEWOCTETSRECEIVED, lineLength);
