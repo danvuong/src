@@ -194,9 +194,11 @@ void MySocketClient::run()
 
  //################ SI c'est un FICHIER ############################
    }else if( f.exists() == true ){
+       tcpSocket.write("HTTP/1.1 200\n\n"); //pb : echappement en trop ?
+       int tailleFichier = 0;
        if(MyFileCache::IsInCache( str ) == 0){//Le fichier n'est pas dans le cache
            QFile* file = new QFile( str );
-           int tailleFichier = file->bytesAvailable();
+           tailleFichier = file->bytesAvailable();
             if (!file->open(QIODevice::ReadWrite))
             {
                     delete file;
@@ -236,9 +238,8 @@ void MySocketClient::run()
                 file->close();
             }
        }else{
-           int tailleFichier = MyFileCache::LoadFromCache( str ).size();
-           tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
-           tcpSocket.write( MyFileCache::LoadFromCache( str ) );
+           tailleFichier = MyFileCache::LoadFromCache( str ).size(); //recup taille depuis cache
+           tcpSocket.write( MyFileCache::LoadFromCache( str ) ); //recup fichier depuis cache
             // enregistre le nb de bytes envoyes
            Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
             //Comptabilise la nouvelle requete effectuée
