@@ -204,13 +204,10 @@ void MySocketClient::run()
                     delete file;
                     return;
             }
-            cout << "&&&&&&&&&&&&&&&&&&&" << fileName << endl;
             if(fileName.compare("/config.html") == 0)
             {
-                cout << "CONFIIIIIIIIIIIIIIIIIIIIIIG"<< endl;
                 if(Admin.testMdp())
                 {
-                    tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
                     QByteArray data = file->readAll();
                     tcpSocket.write( data );
                         // enregistre le nb de bytes envoyes
@@ -226,7 +223,6 @@ void MySocketClient::run()
             }
             else
             {
-                tcpSocket.write("HTTP/1.1 200"); //pb : echappement necessaire apres <!DOCTYPE html> ???
                 QByteArray data = file->readAll();
                 tcpSocket.write( data );
                     // enregistre le nb de bytes envoyes
