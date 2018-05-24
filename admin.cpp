@@ -63,6 +63,12 @@ void admin::findActivate(QVector<QString> array)
             std::cout << array[i].toStdString() << std::endl;
             formLigne = array[i].toStdString();
         }
+        int foundcache =  tempLigne.find("vider+le+cache");
+        if(foundcache!=std::string::npos)
+        {
+            std::cout << array[i].toStdString() << std::endl;
+            formLigne = array[i].toStdString();
+        }
     }
 
     int posi1 = formLigne.find("=");
@@ -70,22 +76,21 @@ void admin::findActivate(QVector<QString> array)
     std::string testActivate;
     testActivate = formLigne.substr(posi1+1,posi2-posi1-1);
     formLigne = formLigne.substr(posi2+1,std::string::npos);
-    std::cout << "|||||||||||||||||||||" << testActivate << std::endl;
 
     if (!testActivate.compare("activate"))
     {
-        //emit signalActivate();
         MySocketClient::activate = !MySocketClient::activate;
 
     }
-
-
+    if ( !testActivate.compare("vider+le+cache")){
+        MyFileCache::EmptyCache();
+    }
 
 }
 
 int admin::testMdp()
 {
-    for(int i=0;i<listAdmin.length();i++)
+    for(int i=0;i<listAdmin.size();i++)
     {
         if(listAdmin[i][0].compare(user)==0)
         {

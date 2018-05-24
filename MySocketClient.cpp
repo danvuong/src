@@ -205,17 +205,58 @@ void MySocketClient::run()
    }else if( f.exists() == true ){
        tcpSocket.write("HTTP/1.1 200\n\n"); //pb : echappement en trop ?
        int tailleFichier = 0;
-       if(MyFileCache::IsInCache( str ) == 0){//Le fichier n'est pas dans le cache
-           QFile* file = new QFile( str );
-           tailleFichier = file->bytesAvailable();
-            if (!file->open(QIODevice::ReadWrite))
-            {
-                    delete file;
-                    return;
-            }
-            if(fileName.compare("/config.html") == 0)
-            {
-                if(Admin->testMdp())
+
+       //Si le serveur est actif ou si la page requise est pour l'admin
+       std::cout << "ACTIVATE ACTIVATE ACTIVATE ACTIVATE : " << activate << std::endl;
+   if(activate==true || !fileName.compare("/admin.html") || !fileName.compare("/config.html")){
+
+
+
+                //Si le fichier n'est pas dans le cache
+           if(MyFileCache::IsInCache( str ) == 0 || 1){
+
+               QFile* file = new QFile( str );
+               tailleFichier = file->bytesAvailable();
+                if (!file->open(QIODevice::ReadWrite))
+                {
+                        delete file;
+                        return;
+                }
+
+                    //Si on demande la page de config
+                if(fileName.compare("/config.html") == 0)
+                {
+                    //Verif mdp recu pour droit d'acces
+                    if(Admin->testMdp() )
+                    {
+                        QByteArray data = file->readAll();
+                        tcpSocket.write( data );
+                            // enregistre le nb de bytes envoyes
+                        Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
+                            //Comptabilise la nouvelle requete effectuée
+                        Server_stat::updateStat(NEWREQUESTDONE, 1);
+                            //on stocke le fichier dans le cache
+                        MyFileCache::StoreInCache( str, data );
+                        file->close();
+                    }
+                    else {
+                        cout << str.toStdString() << endl;
+
+                        cout << "PAS LE BON MDP" << endl;
+                        delete file;
+                        QString str2 = tr("public_html/admin.html");
+                        QFile* file2 = new QFile( str2 );
+                        if (!file2->open(QIODevice::ReadWrite))
+                        {
+                                delete file2;
+                                return;
+                        }
+                        tcpSocket.write( file2->readAll() );
+                        file2->close();
+                    }
+                }
+
+                else
                 {
                     QByteArray data = file->readAll();
                     tcpSocket.write( data );
@@ -227,32 +268,16 @@ void MySocketClient::run()
                     MyFileCache::StoreInCache( str, data );
                     file->close();
                 }
-                else
-                    cout << "PAS LE BON MDP" << endl;
-            }
-            else
-            {
-                QByteArray data = file->readAll();
-                tcpSocket.write( data );
-                    // enregistre le nb de bytes envoyes
-                Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
-                    //Comptabilise la nouvelle requete effectuée
-                Server_stat::updateStat(NEWREQUESTDONE, 1);
-                    //on stocke le fichier dans le cache
-                MyFileCache::StoreInCache( str, data );
-                file->close();
-            }
-       }else{
-
-           if(activate==true){
+       }else{ //si le fichier est dans le cache
                tailleFichier = MyFileCache::LoadFromCache( str ).size(); //recup taille depuis cache
                tcpSocket.write( MyFileCache::LoadFromCache( str ) ); //recup fichier depuis cache
                 // enregistre le nb de bytes envoyes
                Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
                 //Comptabilise la nouvelle requete effectuée
                Server_stat::updateStat(NEWREQUESTDONE, 1);
-           }
+
        }
+   } //Fin si activate == true
 
 
    }else{

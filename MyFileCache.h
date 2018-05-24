@@ -20,6 +20,7 @@ public:
     static void StoreInCache(QString name, QByteArray array);
     static QByteArray LoadFromCache(QString name);
     static int IsInCache(QString name);
+    static void EmptyCache();
 
 
 private:

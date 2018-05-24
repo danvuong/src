@@ -40,3 +40,7 @@ int MyFileCache::IsInCache(QString name){
         return 0;   //Le fichier n'est pas dans le cache
     }
 }
+
+void MyFileCache::EmptyCache(){
+    cache.clear();
+}

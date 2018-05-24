@@ -14,7 +14,7 @@ class admin
    private:
     std::string mdp;
     std::string user;
-    QVector<QVector<std::string>> listAdmin;
+    QVector< QVector < std::string > > listAdmin;
 
    signals:
     void signalActivate();
