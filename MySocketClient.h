@@ -60,6 +60,8 @@ class MySocketClient : public QThread
 public:
     MySocketClient(int socketDescriptor, QObject *parent);
 
+    static bool activate;
+
     void run();
     void directory(QString path, QFileInfoList list, QString fileName);
     void read(QTcpSocket tcpSocket);
@@ -69,12 +71,12 @@ signals:
     void RequestTraited();
     void newClient();
     void newstat();
-
+public slots:
+    void activateServer();
 
 private:
     int socketDescriptor;
     QString text;
-    admin Admin;
 };
 
 #endif

@@ -47,9 +47,13 @@
 #include <QByteArray>
 #include <QVector>
 
+bool MySocketClient::activate=true;
+
 MySocketClient::MySocketClient(int socketDescriptor, QObject *parent)
     : QThread(parent), socketDescriptor(socketDescriptor)
 {
+
+
 }
 
 inline string removeEndLine(string s){
@@ -62,6 +66,10 @@ inline string removeEndLine(string s){
 
 void MySocketClient::run()
 {
+
+      admin *Admin = new admin();
+//    connect(Admin,SIGNAL(signalActivate()), this, SLOT(activateServer()));
+
     cout << "Starting MySocketClient::run()" << endl;
     QTcpSocket tcpSocket;
 
@@ -98,8 +106,9 @@ void MySocketClient::run()
            array.append(temp);
         }
 
-    Admin.findId(array);
-
+    Admin->findId(array);
+    Admin->findActivate(array);
+    cout << "!!!!!!!!!!!!!!!"<<activate<< endl;
 
 
     // ON ENREGISTRE LE NB D'OCTETS RECUS
@@ -206,7 +215,7 @@ void MySocketClient::run()
             }
             if(fileName.compare("/config.html") == 0)
             {
-                if(Admin.testMdp())
+                if(Admin->testMdp())
                 {
                     QByteArray data = file->readAll();
                     tcpSocket.write( data );
@@ -234,13 +243,15 @@ void MySocketClient::run()
                 file->close();
             }
        }else{
-           tailleFichier = MyFileCache::LoadFromCache( str ).size(); //recup taille depuis cache
-           tcpSocket.write( MyFileCache::LoadFromCache( str ) ); //recup fichier depuis cache
-            // enregistre le nb de bytes envoyes
-           Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
-            //Comptabilise la nouvelle requete effectuée
-           Server_stat::updateStat(NEWREQUESTDONE, 1);
 
+           if(activate==true){
+               tailleFichier = MyFileCache::LoadFromCache( str ).size(); //recup taille depuis cache
+               tcpSocket.write( MyFileCache::LoadFromCache( str ) ); //recup fichier depuis cache
+                // enregistre le nb de bytes envoyes
+               Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
+                //Comptabilise la nouvelle requete effectuée
+               Server_stat::updateStat(NEWREQUESTDONE, 1);
+           }
        }
 
 
@@ -307,4 +318,9 @@ void MySocketClient::directory(QString path,  QFileInfoList list, QString fileNa
 
         fichier.close();
     }
+}
+
+void MySocketClient::activateServer(){
+    activate=!activate;
+    cout <<"!!!!!!!!!!!!!!!!!!!!"<< activate << endl;
 }

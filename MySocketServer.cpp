@@ -62,6 +62,7 @@ void MySocketServer::incomingConnection(int socketDescriptor)
 
 
 
+
     // ON INDIQUE QUE LORSQU'UN CLIENT SE CONNECTE ON DELEGE LA REPONSE
     // AU PROCESSUS DEFINI CI DESSUS...
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));

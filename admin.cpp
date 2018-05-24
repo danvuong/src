@@ -12,6 +12,9 @@
 #include <iostream>
 
 #include "admin.h"
+#include "MySocketClient.h"
+
+
 
 admin::admin()
 {
@@ -45,6 +48,38 @@ void admin::findId(QVector<QString> array)
     mdp = formLigne.substr(posi1+1,std::string::npos);
     std::cout << "|||||||||||||||||||||" << mdp << std::endl;
     std::cout << "|||||||||||||||||||||" << testMdp() << std::endl;
+
+}
+
+void admin::findActivate(QVector<QString> array)
+{
+    std::string formLigne;
+    for(int i=0;i<array.size();i++)
+    {
+        std::string tempLigne = array[i].toStdString();
+        int found = tempLigne.find("activate");
+        if(found!=std::string::npos)
+        {
+            std::cout << array[i].toStdString() << std::endl;
+            formLigne = array[i].toStdString();
+        }
+    }
+
+    int posi1 = formLigne.find("=");
+    int posi2 = formLigne.find("&");
+    std::string testActivate;
+    testActivate = formLigne.substr(posi1+1,posi2-posi1-1);
+    formLigne = formLigne.substr(posi2+1,std::string::npos);
+    std::cout << "|||||||||||||||||||||" << testActivate << std::endl;
+
+    if (!testActivate.compare("activate"))
+    {
+        //emit signalActivate();
+        MySocketClient::activate = !MySocketClient::activate;
+
+    }
+
+
 
 }
 
