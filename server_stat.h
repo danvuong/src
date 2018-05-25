@@ -81,7 +81,6 @@ public:
     Server_stat(QWidget *parent = 0);
     static void updateStat(typeStat type, int data);
     static void addTypeOfRequest(std::string chemin);
-    void afficheTypeOfRequest();
 
 
 private:
@@ -100,7 +99,7 @@ private:
 
 
 public slots:
-    void test();
+    void statHTML();
     void repaintstat();
 
 };

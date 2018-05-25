@@ -41,8 +41,7 @@
 #include <QPushButton>
 
 #include "dialog.h"
-//#include "Server_stat.h"
-#include "testducul.h"
+
 
 #include <iostream>
 using namespace std;

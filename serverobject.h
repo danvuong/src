@@ -1,6 +1,0 @@
-#ifndef SERVEROBJECT_H
-#define SERVEROBJECT_H
-
-#endif // SERVEROBJECT_H
-
-
