@@ -66,6 +66,7 @@ inline string removeEndLine(string s){
 
 void MySocketClient::run()
 {
+    emit requestHTML();
 
       admin *Admin = new admin();
 //    connect(Admin,SIGNAL(signalActivate()), this, SLOT(activateServer()));
@@ -123,7 +124,6 @@ void MySocketClient::run()
     // ON AFFICHE LA COMMANDE A L'ECRAN...
     cout << "COMMANDE : =>" << ligne << "<=" << endl;
     Server_stat::updateStat(NEWREQUEST, 1);
-    emit requestHTML();
 
    int pos1 = ligne.find(" ");
    string cmde = ligne.substr(0, pos1);
@@ -213,7 +213,7 @@ void MySocketClient::run()
 
 
                 //Si le fichier n'est pas dans le cache
-           if(MyFileCache::IsInCache( str ) == 0 || 1){
+           if(MyFileCache::IsInCache( str ) == 0){
 
                QFile* file = new QFile( str );
                tailleFichier = file->bytesAvailable();

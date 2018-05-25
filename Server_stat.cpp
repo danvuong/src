@@ -42,7 +42,7 @@
 #include <QFile>       // Pour utiliser le fichier
 #include <QString>     // Stocke le contenu du fichier
 #include <QTextStream> // Flux sortant du fichier
-
+#include <QVector>
 
 #include <stdlib.h>
 #include <iostream>
@@ -105,11 +105,26 @@ void Server_stat::test()
 
     QString chemin;
     chemin = "public_html/statistiques.html";
-    QFile fichier(chemin);
+    QFile fichier(chemin); 
+    QVector<QString> stats;
+
+    /*if(fichier.open(QIODevice::ReadOnly| QIODevice::Text))
+    {
+        QTextStream flux(&fichier);
+        int j=0;
+        while(!fichier.atEnd())
+        {
+            stats[j]=flux.readLine();
+            j++;
+        }
+        fichier.close();
+    }*/
+
     if(fichier.open(QIODevice::WriteOnly))
     {
         std::cout << "####### FICHIER OUVERT" << std::endl;
         QTextStream flux(&fichier);
+
         //flux << "HTTP/1.1 200\n";
         flux << "<!DOCTYPE html>\n";
         flux << "\n";
