@@ -24,38 +24,39 @@ admin::admin()
     listAdmin.append(temp);
 }
 
+//FONCTION DE RECUPERATION MOT DE PASSE ET ID
 void admin::findId(QVector<QString> array)
 {
     std::string formLigne;
     for(int i=0;i<array.size();i++)
     {
+        //on parcours toutes les lignes de la requetes pour trouver le mot "usr"
         std::string tempLigne = array[i].toStdString();
         int found = tempLigne.find("usr");
         if(found!=std::string::npos)
         {
             std::cout << array[i].toStdString() << std::endl;
-            formLigne = array[i].toStdString();
+            formLigne = array[i].toStdString();//on récupère la ligne contenant l'identifiant et le mot de passe
         }
     }
 
     int posi1 = formLigne.find("=");
     int posi2 = formLigne.find("&");
-    user = formLigne.substr(posi1+1,posi2-posi1-1);
+    user = formLigne.substr(posi1+1,posi2-posi1-1);//On ne recupere que l'identifiant
     formLigne = formLigne.substr(posi2+1,std::string::npos);
-    std::cout << "|||||||||||||||||||||" << user << std::endl;
 
     posi1 = formLigne.find("=");
-    mdp = formLigne.substr(posi1+1,std::string::npos);
-    std::cout << "|||||||||||||||||||||" << mdp << std::endl;
-    std::cout << "|||||||||||||||||||||" << testMdp() << std::endl;
-
+    mdp = formLigne.substr(posi1+1,std::string::npos);//On ne recupere que le mot de passe
 }
 
+
+//FONCTION DE VERIFICATION ACTIVATION/DESACTIVATTION SERVEUR
 void admin::findActivate(QVector<QString> array)
 {
     std::string formLigne;
     for(int i=0;i<array.size();i++)
     {
+        //on parcours toutes les lignes de la requetes pour trouver le mot "activate"...
         std::string tempLigne = array[i].toStdString();
         int found = tempLigne.find("activate");
         if(found!=std::string::npos)
@@ -63,6 +64,7 @@ void admin::findActivate(QVector<QString> array)
             std::cout << array[i].toStdString() << std::endl;
             formLigne = array[i].toStdString();
         }
+        //... ou le mot "vider le cache"
         int foundcache =  tempLigne.find("vider+le+cache");
         if(foundcache!=std::string::npos)
         {
@@ -88,6 +90,7 @@ void admin::findActivate(QVector<QString> array)
 
 }
 
+//FONCTION TESTANT LE MOT DE PASSE ET L'IDENTIFIANT
 int admin::testMdp()
 {
     for(int i=0;i<listAdmin.size();i++)

@@ -42,7 +42,7 @@
 #include <QFile>       // Pour utiliser le fichier
 #include <QString>     // Stocke le contenu du fichier
 #include <QTextStream> // Flux sortant du fichier
-
+#include <QVector>
 
 #include <stdlib.h>
 #include <iostream>
@@ -66,6 +66,7 @@ all_file_type Server_stat::all_files_requested[TAILLE_MAX_TABLEAU];
 Server_stat::Server_stat(QWidget *parent)
     : QDialog(parent)
 {
+    //CREATION DU WIDGET STAT SERVEUR
     statusLabel = new QLabel;
     quitButton = new QPushButton(tr("Quit"));
     quitButton->setAutoDefault(false);
@@ -91,7 +92,9 @@ Server_stat::Server_stat(QWidget *parent)
 }
 
 // SLOT
-void Server_stat::test()
+
+//Fonction mettant a jour la page de statistiques
+void Server_stat::statHTML()
 {
     QString str_count_request_received = QString::number(count_request_received);
 
@@ -105,11 +108,14 @@ void Server_stat::test()
 
     QString chemin;
     chemin = "public_html/statistiques.html";
-    QFile fichier(chemin);
+    QFile fichier(chemin); 
+    QVector<QString> stats;
+
     if(fichier.open(QIODevice::WriteOnly))
     {
         std::cout << "####### FICHIER OUVERT" << std::endl;
         QTextStream flux(&fichier);
+
         //flux << "HTTP/1.1 200\n";
         flux << "<!DOCTYPE html>\n";
         flux << "\n";
@@ -127,6 +133,8 @@ void Server_stat::test()
         flux << "</head>\n";
 
         //####### CORPS DU TEXTE ########
+
+        //Affiche les différentes statistiques du serveur
         flux << "<body>\n";
         flux << "   <p> STATISTIQUES: </p>\n";
         flux << "<p> Nombre de requetes reçues: " + str_count_request_received + "</p\n";
@@ -136,11 +144,13 @@ void Server_stat::test()
         flux << "<p> Nombre d'octets reçus: " + str_count_octets_received + "</p>\n";
 
 
-            // Fenetre deroulante
+            //## FENETRE DEROULANTE
+
+        //Log des requetes effectuées
         flux << "<div id=\"container\">\n";
 
         int i=0;
-        while ( all_files_requested[i].chemin.compare("") && i<TAILLE_MAX_TABLEAU)
+        while ( all_files_requested[i].chemin.compare("") && i<TAILLE_MAX_TABLEAU && all_files_requested[i].chemin.compare("public_html/favicon.ico"))
         {
             flux << "<p>" + QString::fromStdString(all_files_requested[i].chemin)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ all_files_requested[i].date + "</p>\n";
             i++;
@@ -160,38 +170,29 @@ void Server_stat::test()
 
 
 // STATIC
+
+//Fonction comptant les statistiques du serveur
 void Server_stat::updateStat(typeStat type, int data){
-    std::cout << "######## UPDATE DES STATS :::: " << type << " - " << data << "   ###############" << std::endl;
+    //std::cout << "######## UPDATE DES STATS :::: " << type << " - " << data << "   ###############" << std::endl;
     switch ( type ) {
     case NEWCLIENT :
         count_client++;
-        std::cout << " NEWCLIENT : nb de clients detectes :  " << count_client << std::endl;
         break;
     case NEWREQUEST:
         count_request_received++;
-        std::cout << " NEWREQUEST : nb de requetes detectes :  " << count_request_received << std::endl;
         break;
     case NEWREQUESTDONE:
         count_request_done++;
-        std::cout << " NEWREQUESTDONE : nb de requetes effectuees :  " << count_request_done << std::endl;
         break;
     case NEWERROR:
         count_error++;
-        std::cout << " NEWERROR : nb d'erreurs detectees :  " << count_error << std::endl;
         break;
     case NEWOCTETSRECEIVED:
         count_octets_received += data;
-        std::cout << " NEWOCTETS : nb d'octets recus :  " << count_octets_received << std::endl;
         break;
     case NEWOCTETSSEND:
         count_octets_send += data;
-        std::cout << " NEWOCTETS : nb d'octets envoyes :  " << count_octets_send << std::endl;
         break;
-    /*case NEWREQUEST:
-        count_request_received++;
-        std::cout << " NEWCLIENT : nb de clients detectes :  " << count_client << std::endl;
-        break;
-    */
     default :
         std::cout << " ERROR : unknow updateStat string type \n" << std::endl;
         break;
@@ -223,12 +224,10 @@ void Server_stat::addTypeOfRequest(std::string chemin){
     std::cout << " RrRrR type de requete ajoutee : " << files_requested[i].chemin << "en position : " << i << std::endl;
 }
 
-void Server_stat::afficheTypeOfRequest(){
-    ;
-}
-
 
 // SLOT
+
+//Fonction mettant à jour le widget statistiques
 void Server_stat::repaintstat(){
 
     QString message1 = QString::number(count_request_received);

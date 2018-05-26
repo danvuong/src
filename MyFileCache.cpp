@@ -42,5 +42,8 @@ int MyFileCache::IsInCache(QString name){
 }
 
 void MyFileCache::EmptyCache(){
+    std::cout << "########## VIDAGE CACHE DEMANDE ########"<< std::endl;
+    std::cout << "########## TAILLE AVANT VIDAGE : " << cache.size() << std::endl;
     cache.clear();
+    std::cout << "##########  TAILLE APRES VIDAGE : " << cache.size() << std::endl;
 }
