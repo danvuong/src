@@ -1,3 +1,8 @@
+/*
+ * Cette classe permet de verifier les droits de l'utilisateur
+*/
+
+
 #ifndef ADMIN_H
 #define ADMIN_H
 

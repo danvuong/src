@@ -137,7 +137,7 @@ void MySocketClient::run()
         while( tcpSocket.bytesAvailable() > 0 ){
         int lineLength = tcpSocket.readLine(tampon, 65536);
         if (lineLength != -1 &&  lineLength != 0) {
-                //cout << "C" << lineLength << " :: " << tampon;
+
         }else if(lineLength != -1 ){
                 cout << "Nothing for the moment !" << endl;
         }
@@ -222,6 +222,7 @@ void MySocketClient::run()
                     //Verif mdp recu pour droit d'acces
                     if(Admin->testMdp() )
                     {
+                        cout << "  MDP  ----->   OK  " << endl;
                         QByteArray data = file->readAll();
                         tcpSocket.write( data );//On renvoit la page de config
                             // enregistre le nb de bytes envoyes
@@ -233,8 +234,7 @@ void MySocketClient::run()
                         file->close();
                     }
                     else {//Mauvais mot de passe
-                        //cout << str.toStdString() << endl;
-                        cout << "PAS LE BON MDP" << endl;
+                        cout << "   PAS LE BON MDP" << endl;
                         delete file;
                         QString str2 = tr("public_html/admin.html");
                         QFile* file2 = new QFile( str2 );
@@ -248,38 +248,38 @@ void MySocketClient::run()
                     }
                 }
 
-                else  //Si ce n'est pas la page config
+                else  //Si ce n'est pas la page config on envoie la page
                 {
                     QByteArray data = file->readAll();
-                    tcpSocket.write( data );//On renvoit la page
-                        // enregistre le nb de bytes envoyes
+                    tcpSocket.write( data );    //On renvoit la page
+                        // Enregistre le nb de bytes envoyes
                     Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
-                        //Comptabilise la nouvelle requete effectuée
+                        // Comptabilise la nouvelle requete effectuée
                     Server_stat::updateStat(NEWREQUESTDONE, 1);
-                        //on stocke le fichier dans le cache
-                    MyFileCache::StoreInCache( str, data );//Stock la page dans le cache
+                        // On stocke le fichier dans le cache
+                    MyFileCache::StoreInCache( str, data ); // stoske la page dans le cache
                     file->close();
                 }
-       }else{ //si le fichier est dans le cache
-               tailleFichier = MyFileCache::LoadFromCache( str ).size(); //recup taille depuis cache
-               tcpSocket.write( MyFileCache::LoadFromCache( str ) ); //recup fichier depuis cache
-                // enregistre le nb de bytes envoyes
+       }else{   //si le fichier est dans le cache, on l'envoie a partir de celui-ci
+               tailleFichier = MyFileCache::LoadFromCache( str ).size();    // Recupere taille depuis cache
+               tcpSocket.write( MyFileCache::LoadFromCache( str ) );    // Recupere fichier depuis cache
+                    // enregistre le nb de bytes envoyes
                Server_stat::updateStat(NEWOCTETSSEND, tailleFichier);
-                //Comptabilise la nouvelle requete effectuée
+                    //Comptabilise la nouvelle requete effectuée
                Server_stat::updateStat(NEWREQUESTDONE, 1);
 
        }
    } //Fin si activate == true
 
 
-   }else{
+   }else{  //Le serveur est desactive et la page requise n'est pas une exception  --> ne renvoie rien
 
    }
     // FIN DE LA CONNEXION CLIENT
     tcpSocket.disconnectFromHost();
     tcpSocket.waitForDisconnected();
     cout << "Finishing MySocketClient::run()" << endl;
-    emit newstat();
+    emit newstat();    // Signal pour Server_stat : rafraichir la fenetre des stats
 }
 
 
@@ -300,7 +300,10 @@ void MySocketClient::directory(QString path,  QFileInfoList list, QString fileNa
         flux << "<body>\n";
         flux << "<p> VOUS ETES DANS LE DOSSIER:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + fileName + "</p>\n";
         flux << "\n";
-        if(QString::compare(fileName, "public_html", Qt::CaseInsensitive) != 0)//Si on demande la dossier public_html
+
+            //Cas particulier si on demande la dossier public_html (car par default "public_html" est ajouté
+            //au chemin demandé pour se placer dans le dossier public_html qui contient les pages HTML)
+        if(QString::compare(fileName, "public_html", Qt::CaseInsensitive) != 0)
         {
             for (int i = 0; i < list.size(); ++i) {
                 QFileInfo fileInfo = list.at(i);
@@ -314,10 +317,9 @@ void MySocketClient::directory(QString path,  QFileInfoList list, QString fileNa
                 flux << "<p><a href=\""+ QString("%1").arg(fileInfo.fileName()) +"\">" + QString("%1").arg(fileInfo.fileName()) +"</a></p>\n";
              }
         }
+
         flux << "</body>\n";
-
         flux << "</html>\n";
-
         fichier.close();
     }
 }

@@ -93,7 +93,7 @@ Server_stat::Server_stat(QWidget *parent)
 
 // SLOT
 
-//Fonction mettant a jour la page de statistiques
+//Fonction mettant a jour la page HTML de statistiques
 void Server_stat::statHTML()
 {
     QString str_count_request_received = QString::number(count_request_received);
@@ -113,7 +113,7 @@ void Server_stat::statHTML()
 
     if(fichier.open(QIODevice::WriteOnly))
     {
-        std::cout << "####### FICHIER OUVERT" << std::endl;
+        std::cout << "####### FICHIER STATS OUVERT  #######" << std::endl;
         QTextStream flux(&fichier);
 
         //flux << "HTTP/1.1 200\n";
@@ -171,7 +171,7 @@ void Server_stat::statHTML()
 
 // STATIC
 
-//Fonction comptant les statistiques du serveur
+//Fonction incrementant les statistiques du serveur
 void Server_stat::updateStat(typeStat type, int data){
     //std::cout << "######## UPDATE DES STATS :::: " << type << " - " << data << "   ###############" << std::endl;
     switch ( type ) {
@@ -199,6 +199,8 @@ void Server_stat::updateStat(typeStat type, int data){
     }
 }
 
+
+    //Fonction comptabilisant les requetes par types (ex : nb de requetes pour index.html, admin.html etc...)
 void Server_stat::addTypeOfRequest(std::string chemin){
     int i = 0;
     int k = 0;
@@ -221,13 +223,13 @@ void Server_stat::addTypeOfRequest(std::string chemin){
     all_files_requested[k].chemin = chemin;
     all_files_requested[k].date = sDate;
 
-    std::cout << " RrRrR type de requete ajoutee : " << files_requested[i].chemin << "en position : " << i << std::endl;
+    //std::cout << "       type de requete ajoutee : " << files_requested[i].chemin << "en position : " << i << std::endl;
 }
 
 
 // SLOT
 
-//Fonction mettant à jour le widget statistiques
+//Fonction mettant à jour le widget statistiques (rafraichissement de la fenetre)
 void Server_stat::repaintstat(){
 
     QString message1 = QString::number(count_request_received);

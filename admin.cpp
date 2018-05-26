@@ -35,7 +35,7 @@ void admin::findId(QVector<QString> array)
         int found = tempLigne.find("usr");
         if(found!=std::string::npos)
         {
-            std::cout << array[i].toStdString() << std::endl;
+            std::cout << "     DEMANDE DE DROITS DETECTEE :     " << array[i].toStdString() << std::endl;
             formLigne = array[i].toStdString();//on récupère la ligne contenant l'identifiant et le mot de passe
         }
     }
@@ -61,14 +61,12 @@ void admin::findActivate(QVector<QString> array)
         int found = tempLigne.find("activate");
         if(found!=std::string::npos)
         {
-            std::cout << array[i].toStdString() << std::endl;
             formLigne = array[i].toStdString();
         }
         //... ou le mot "vider le cache"
         int foundcache =  tempLigne.find("vider+le+cache");
         if(foundcache!=std::string::npos)
         {
-            std::cout << array[i].toStdString() << std::endl;
             formLigne = array[i].toStdString();
         }
     }
@@ -81,6 +79,7 @@ void admin::findActivate(QVector<QString> array)
 
     if (!testActivate.compare("activate"))
     {
+        std::cout << "      ACTIVATION OU DESACTIVATION DU SERVEUR   :    " << std::endl;
         MySocketClient::activate = !MySocketClient::activate;
 
     }

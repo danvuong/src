@@ -1,3 +1,7 @@
+/*
+ * Cette classe enregistre dans un hash (QHash) le contenu du cache du serveur
+*/
+
 #ifndef MYFILECACHE_H
 #define MYFILECACHE_H
 
