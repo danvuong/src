@@ -55,7 +55,7 @@ protected:
 
 private:
     Server_stat statServer;
-
+    MyFileCache serverCache;
 
 signals:
     void serverMessage();

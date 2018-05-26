@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="src"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="src">
+				<Option output="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/src.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/."/>
+					<Add directory="a:\merlin\programmes\mingw\bin\../lib/gcc/mingw32/6.3.0/include/c++"/>
+					<Add directory="a:\merlin\programmes\mingw\bin\../lib/gcc/mingw32/6.3.0/include/c++/mingw32"/>
+					<Add directory="a:\merlin\programmes\mingw\bin\../lib/gcc/mingw32/6.3.0/include/c++/backward"/>
+					<Add directory="a:\merlin\programmes\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="a:\merlin\programmes\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="a:\merlin\programmes\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 src"/>
+					<CompileFile command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="src/fast">
+				<Option output="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/src.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/."/>
+					<Add directory="a:\merlin\programmes\mingw\bin\../lib/gcc/mingw32/6.3.0/include/c++"/>
+					<Add directory="a:\merlin\programmes\mingw\bin\../lib/gcc/mingw32/6.3.0/include/c++/mingw32"/>
+					<Add directory="a:\merlin\programmes\mingw\bin\../lib/gcc/mingw32/6.3.0/include/c++/backward"/>
+					<Add directory="a:\merlin\programmes\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="a:\merlin\programmes\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="a:\merlin\programmes\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 src/fast"/>
+					<CompileFile command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="A:/Merlin/Programmes/MinGW/bin/mingw32-make.exe -f &quot;A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/MyFileCache.cpp">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/MyFileCache.h">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/MySocketClient.cpp">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/MySocketClient.h">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/MySocketServer.cpp">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/MySocketServer.h">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/Server_stat.cpp">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/Server_stat.h">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/admin.cpp">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/admin.h">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/dialog.cpp">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/dialog.h">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/main.cpp">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/server_stat.h">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/serverobject.cpp">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/serverobject.h">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/testducul.cpp">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/testducul.h">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="A:/Merlin/Code/GitHub/ProjetGambas/pg208_web_project-master/src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
